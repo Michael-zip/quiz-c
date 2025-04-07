@@ -1,0 +1,1264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Network Quiz</title>
+    <style>
+        /* Base styles */
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #1a1a1a;
+            color: #e5e7eb;
+        }
+
+        .container {
+            max-width: 1024px;
+            margin: 0 auto;
+            padding: 1rem;
+        }
+
+        .quiz-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .quiz-header h1 {
+            font-size: 1.875rem;
+            font-weight: bold;
+            color: #60a5fa;
+            margin-bottom: 0.5rem;
+        }
+
+        .quiz-header p {
+            color: #9ca3af;
+        }
+
+        /* Question styles */
+        .question-container {
+            background: #2d2d2d;
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            margin-bottom: 1.5rem;
+            border: 1px solid #404040;
+        }
+
+        .question-title {
+            font-size: 1.25rem;
+            font-weight: bold;
+            color: #60a5fa;
+            margin-bottom: 1rem;
+        }
+
+        .question-text {
+            margin-bottom: 1.5rem;
+            color: #e5e7eb;
+        }
+
+        /* Option styles */
+        .options-container {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .option {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem;
+            border-radius: 0.375rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            background: #363636;
+            border: 1px solid #404040;
+            color: #e5e7eb;
+        }
+
+        .option:hover:not(.correct):not(.incorrect) {
+            background-color: #404040;
+            border-color: #60a5fa;
+        }
+
+        .option.selected {
+            background-color: #2563eb;
+            color: white;
+            border-color: #60a5fa;
+        }
+
+        .option.correct {
+            background-color: #065f46;
+            color: white;
+            border-color: #34d399;
+        }
+
+        .option.incorrect {
+            background-color: #991b1b;
+            color: white;
+            border-color: #f87171;
+        }
+
+        .option-content {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            gap: 0.75rem;
+        }
+
+        /* Matching styles */
+        .matching-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-top: 1rem;
+        }
+
+        .matching-section {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .matching-section h3 {
+            font-size: 1.125rem;
+            font-weight: 500;
+            color: #9ca3af;
+            margin-bottom: 0.5rem;
+        }
+
+        .matching-item {
+            padding: 1rem;
+            border-radius: 0.5rem;
+            background: #363636;
+            border: 1px solid #404040;
+            cursor: pointer;
+            transition: all 0.2s;
+            position: relative;
+            color: #e5e7eb;
+        }
+
+        .matching-item:hover:not(.matched) {
+            background-color: #404040;
+            border-color: #60a5fa;
+        }
+
+        .matching-item.selected {
+            background-color: #2563eb;
+            color: white;
+            border-color: #60a5fa;
+        }
+
+        .matching-item.matched {
+            background-color: #065f46;
+            color: white;
+            border-color: #34d399;
+        }
+
+        .matching-item.matched.incorrect {
+            background-color: #991b1b;
+            color: white;
+            border-color: #f87171;
+        }
+
+        .matching-item .matched-term {
+            font-size: 0.875rem;
+            margin-top: 0.5rem;
+            padding-top: 0.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .matching-instructions {
+            grid-column: 1 / -1;
+            text-align: center;
+            color: #9ca3af;
+            font-size: 0.875rem;
+            margin-top: 1rem;
+            padding: 1rem;
+            background-color: #2d2d2d;
+            border-radius: 0.5rem;
+        }
+
+        .matching-item .checkmark {
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            color: white;
+            font-weight: bold;
+        }
+
+        /* Navigation */
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 1.5rem;
+        }
+
+        .nav-button {
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.375rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: none;
+        }
+
+        .nav-button:disabled {
+            background-color: #404040;
+            color: #6b7280;
+            cursor: not-allowed;
+        }
+
+        .nav-button-primary {
+            background-color: #2563eb;
+            color: white;
+        }
+
+        .nav-button-primary:hover:not(:disabled) {
+            background-color: #1d4ed8;
+        }
+
+        .nav-button-secondary {
+            background-color: #4b5563;
+            color: white;
+        }
+
+        .nav-button-secondary:hover:not(:disabled) {
+            background-color: #374151;
+        }
+
+        .question-counter {
+            font-size: 0.875rem;
+            color: #9ca3af;
+        }
+
+        /* Progress bar */
+        .progress-bar {
+            width: 100%;
+            height: 0.625rem;
+            background-color: #404040;
+            border-radius: 9999px;
+            margin-bottom: 1.5rem;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background-color: #2563eb;
+            border-radius: 9999px;
+            transition: width 0.3s ease-out;
+        }
+
+        /* Results screen */
+        .results-container {
+            background: #2d2d2d;
+            border-radius: 0.5rem;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .results-container h2 {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #1e40af;
+            margin-bottom: 1.5rem;
+        }
+
+        .score {
+            font-size: 2.25rem;
+            font-weight: bold;
+            color: #2563eb;
+            margin-bottom: 1rem;
+        }
+
+        .restart-button {
+            padding: 0.75rem 1.5rem;
+            background-color: #2563eb;
+            color: white;
+            border-radius: 0.375rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .restart-button:hover {
+            background-color: #1d4ed8;
+        }
+
+        /* Progress bar */
+        .progress-bar {
+            width: 100%;
+            height: 0.625rem;
+            background-color: #e5e7eb;
+            border-radius: 9999px;
+            margin-bottom: 1.5rem;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background-color: #4f46e5;
+            border-radius: 9999px;
+            transition: width 0.3s ease-out;
+        }
+
+        /* Add to the CSS section */
+        .option .checkmark,
+        .option .x-mark {
+            margin-left: auto;
+            font-weight: bold;
+        }
+
+        .option .x-mark {
+            color: #f87171;
+        }
+
+        .option-content {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            gap: 0.75rem;
+        }
+
+        /* Add to CSS */
+        .checkbox {
+            width: 20px;
+            height: 20px;
+            border: 2px solid #4b5563;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 12px;
+            background: #2d2d2d;
+            color: white;
+        }
+
+        .option.selected .checkbox {
+            border-color: #60a5fa;
+            background: #2563eb;
+        }
+
+        .option.correct .checkbox {
+            border-color: #34d399;
+            background: #065f46;
+        }
+
+        .option.incorrect .checkbox {
+            border-color: #f87171;
+            background: #991b1b;
+        }
+
+        .feedback-icon {
+            margin-left: auto;
+            font-weight: bold;
+        }
+
+        .selection-hint {
+            margin-top: 1rem;
+            color: #9ca3af;
+            font-size: 0.875rem;
+            text-align: center;
+        }
+
+        /* Add to CSS section */
+        .question-image-container {
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .question-image {
+            max-width: 100%;
+            height: auto;
+            border-radius: 0.5rem;
+            border: 1px solid #404040;
+        }
+
+        /* Add to CSS */
+        .feedback-message {
+            margin-top: 1rem;
+            padding: 0.5rem;
+            border-radius: 0.375rem;
+            font-weight: 500;
+        }
+
+        .feedback-message.correct {
+            background-color: #065f46;
+            color: white;
+        }
+
+        .feedback-message.incorrect {
+            background-color: #991b1b;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="quiz-header">
+            <h1>Networking Concepts Quiz</h1>
+            <p>Test your knowledge of network security, infrastructure, and protocols</p>
+        </div>
+        
+        <div id="quiz-container">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress-fill"></div>
+            </div>
+            <div id="question-content"></div>
+            <div class="nav-container">
+                <button id="prev-button" class="nav-button nav-button-secondary">Previous</button>
+                <div class="question-counter">
+                    Question <span id="current-question">1</span> of <span id="total-questions">29</span>
+                </div>
+                <button id="next-button" class="nav-button nav-button-primary">Next</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Quiz state initialization
+        let currentQuestion = 0;
+        let userAnswers = {};
+        let matchingAnswers = {};
+        let selectedItem = null;
+        let showResults = false;
+        let shuffledQuestions = null;  // Will be initialized when DOM loads
+
+        // Quiz questions data
+        const questions = [
+            {
+                id: 1,
+                type: 'matching',
+                question: 'Match the type of malware with the definition.',
+                items: [
+                    { id: 'spyware', text: 'spyware' },
+                    { id: 'tracking_cookies', text: 'tracking cookies' },
+                    { id: 'popups', text: 'pop-ups' }
+                ],
+                definitions: [
+                    { id: 'gathers_info', text: 'gathers personal information about a user without permission or knowledge' },
+                    { id: 'advertising_windows', text: 'advertising windows that display when visiting a web site' },
+                    { id: 'allow_personalization', text: 'allow personalization for visited web sites' }
+                ],
+                correctAnswers: {
+                    'spyware': 'gathers_info',
+                    'tracking_cookies': 'allow_personalization',
+                    'popups': 'advertising_windows'
+                }
+            },
+            {
+                id: 2,
+                type: 'multiple-choice',
+                question: 'An intruder tries a large number of possibilities in rapid succession to guess a password. As a result, other users on the network are locked out. What type of attack has occurred?',
+                options: [
+                    'brute force',
+                    'ping of death',
+                    'DDoS',
+                    'SYN flooding'
+                ],
+                correctAnswer: 'brute force'
+            },
+            {
+                id: 3,
+                type: 'multiple-select',
+                question: 'Which three attacks exploit human behavior? (Choose three.)',
+                options: [
+                    'zombies',
+                    'vishing',
+                    'phishing',
+                    'brute force',
+                    'malware',
+                    'pretexting'
+                ],
+                correctAnswers: ['vishing', 'phishing', 'pretexting']
+            },
+            {
+                id: 4,
+                type: 'multiple-choice',
+                question: 'What is the effect of setting the security mode to WEP on a small wireless router?',
+                options: [
+                    'It translates IP addresses into easy-to-remember domain names.',
+                    'It allows the access point to inform clients of its presence.',
+                    'It encrypts data between the wireless client and the access point.',
+                    'It identifies the wireless LAN.',
+                    'It translates an internal address or group of addresses into an outside, public address.'
+                ],
+                correctAnswer: 'It encrypts data between the wireless client and the access point.'
+            },
+            {
+                id: 5,
+                type: 'multiple-choice',
+                question: 'Which solution allows external users to access only an internal FTP server on a private network?',
+                options: [
+                    'dynamic NAT',
+                    'NAT with overload',
+                    'port forwarding',
+                    'static NAT'
+                ],
+                correctAnswer: 'port forwarding'
+            },
+            {
+                id: 6,
+                type: 'multiple-choice',
+                question: 'A DHCP server is used to assign IP addresses dynamically to the hosts on a network. The address pool is configured with 192.168.10.0/24. There are 3 printers on this network that need to use reserved static IP addresses from the pool. How many IP addresses in the pool are left to be assigned to other hosts?',
+                options: [
+                    '252',
+                    '254',
+                    '253',
+                    '251'
+                ],
+                correctAnswer: '251'
+            },
+            {
+                id: 7,
+                type: 'multiple-choice',
+                question: 'Which wireless RF band do IEEE 802.11b/g devices use?',
+                options: [
+                    '2.4 GHz',
+                    '900 MHz',
+                    '60 GHz',
+                    '5 GHz'
+                ],
+                correctAnswer: '2.4 GHz'
+            },
+            {
+                id: 8,
+                type: 'multiple-choice',
+                question: `
+                    <div class="question-image-container">
+                        <img src="https://i.imgur.com/XqabsTb.png" alt="Router ports diagram" class="question-image">
+                    </div>
+                    <p>Which router port connects to the modem provided by the service provider?</p>
+                `,
+                options: [
+                    'A',
+                    'B',
+                    'C',
+                    'D'
+                ],
+                correctAnswer: 'C'
+            },
+            {
+                id: 9,
+                type: 'multiple-choice',
+                question: 'Which type of device filtering can be enabled on some wireless access points or wireless routers?',
+                options: [
+                    'authentication',
+                    'user ID',
+                    'MAC address',
+                    'IP address'
+                ],
+                correctAnswer: 'MAC address'
+            },
+            {
+                id: 10,
+                type: 'multiple-choice',
+                question: 'A customer calls the help line to report a computer problem. The help line technician responds and works with the customer for some time. However, the technician cannot identify the root cause of the problem. What should the technician do to help the customer?',
+                options: [
+                    'Tell the customer that a ticket is created and another technician will contact the user soon.',
+                    'Tell the customer that a replacement computer will be shipped immediately.',
+                    'Suggest that the customer visit the support website for more detailed information.',
+                    'Ask for the email address of the customer in order to send all the support documents for the computer.'
+                ],
+                correctAnswer: 'Tell the customer that a ticket is created and another technician will contact the user soon.'
+            },
+            {
+                id: 11,
+                type: 'multiple-choice',
+                question: 'During a move, employee workstations were disconnected from the network and reconnected in new offices. However, after the move a few workstations cannot get a valid IP address. What should be checked first to identify the root cause of the problem?',
+                options: [
+                    'Test if these workstations can ping the default gateway.',
+                    'Install all software updates.',
+                    'Check the operation status of the DHCP server.',
+                    'Make sure the cables are functional and properly plugged.'
+                ],
+                correctAnswer: 'Make sure the cables are functional and properly plugged.'
+            },
+            {
+                id: 12,
+                type: 'multiple-choice',
+                question: 'A user is setting up a home wireless network. Which type of device must the user have in order to establish the wireless network and provide access to the internet for multiple home devices?',
+                options: [
+                    'switch',
+                    'hub',
+                    'wireless router',
+                    'patch panel'
+                ],
+                correctAnswer: 'wireless router'
+            },
+            {
+                id: 13,
+                type: 'multiple-choice',
+                question: 'When troubleshooting network problems, where would a network administrator find the configuration information, such as the computer names and the IP addresses that are used?',
+                options: [
+                    'DNS server',
+                    'logical topology diagram',
+                    'physical topology diagram',
+                    'DHCP server'
+                ],
+                correctAnswer: 'logical topology diagram'
+            },
+            {
+                id: 14,
+                type: 'multiple-choice',
+                question: 'Which network migration technique encapsulates IPv6 packets inside IPv4 packets to carry them over IPv4 network infrastructures?',
+                options: [
+                    'tunneling',
+                    'encapsulation',
+                    'dual-stack',
+                    'translation'
+                ],
+                correctAnswer: 'tunneling'
+            },
+            {
+                id: 15,
+                type: 'multiple-choice',
+                question: 'If the default gateway is configured incorrectly on a host, what is the impact on communications?',
+                options: [
+                    'The host is unable to communicate with hosts on both the local and remote networks.',
+                    'The host is unable to communicate on the local network.',
+                    'The host is unable to communicate with hosts on remote networks.',
+                    'The host cannot get an IP address from the DHCP server.'
+                ],
+                correctAnswer: 'The host is unable to communicate with hosts on remote networks.'
+            },
+            {
+                id: 16,
+                type: 'multiple-select',
+                question: 'What are two common media used in networks? (Choose two.)',
+                options: [
+                    'wood',
+                    'fiber',
+                    'water',
+                    'copper',
+                    'nylon'
+                ],
+                correctAnswers: ['fiber', 'copper']
+            },
+            {
+                id: 17,
+                type: 'multiple-select',
+                question: 'What are two wiring schemes defined by the TIA/EIA organization for Ethernet installation in homes and businesses? (Choose two.)',
+                options: [
+                    'T568B',
+                    'T568A',
+                    'STP',
+                    'UTP',
+                    'RJ-45'
+                ],
+                correctAnswers: ['T568B', 'T568A']
+            },
+            {
+                id: 18,
+                type: 'multiple-choice',
+                question: 'A host needs to reach another host on a remote network, but the ARP cache has no mapping entries. To what destination address will the host send an ARP request?',
+                options: [
+                    'the unicast MAC address of the remote host',
+                    'the unicast IP address of the remote host',
+                    'the broadcast MAC address',
+                    'the subnet broadcast IP address'
+                ],
+                correctAnswer: 'the broadcast MAC address'
+            },
+            {
+                id: 19,
+                type: 'multiple-choice',
+                question: 'Which type of address does a switch use to build the MAC address table?',
+                options: [
+                    'source MAC address',
+                    'destination MAC address',
+                    'destination IP address',
+                    'source IP address'
+                ],
+                correctAnswer: 'source MAC address'
+            },
+            {
+                id: 20,
+                type: 'multiple-select',
+                question: 'What are two benefits of using a layered network model? (Choose two.)',
+                options: [
+                    'It prevents technology in one layer from affecting other layers.',
+                    'It assists in protocol design.',
+                    'It prevents designers from creating their own model.',
+                    'It ensures a device at one layer can function at the next higher layer.',
+                    'It speeds up packet delivery.'
+                ],
+                correctAnswers: ['It prevents technology in one layer from affecting other layers.', 'It assists in protocol design.']
+            },
+            {
+                id: 21,
+                type: 'multiple-select',
+                question: 'Which two devices are considered end devices? (Choose two.)',
+                options: [
+                    'router',
+                    'laptop',
+                    'hub',
+                    'switch',
+                    'printer'
+                ],
+                correctAnswers: ['laptop', 'printer']
+            },
+            {
+                id: 22,
+                type: 'multiple-choice',
+                question: 'Which factor does not influence throughput?',
+                options: [
+                    'the operating system that is used by end devices',
+                    'the amount of data that is being sent and received on the connection',
+                    'the latency that is created by the number of network devices encountered between source and destination',
+                    'the type of data that is being transmitted'
+                ],
+                correctAnswer: 'the type of data that is being transmitted'
+            },
+            {
+                id: 23,
+                type: 'multiple-choice',
+                question: 'What is a characteristic of a peer-to-peer application?',
+                options: [
+                    'The resources required for the application are centralized.',
+                    'Each device can act both as a client and a server, but not simultaneously.',
+                    'Each device using the application provides a user interface and runs a background service.',
+                    'Both devices initiate a three-way handshake to determine who is initiating the communication.'
+                ],
+                correctAnswer: 'Each device using the application provides a user interface and runs a background service.'
+            },
+            {
+                id: 24,
+                type: 'multiple-choice',
+                question: 'A user is configuring a wireless access point and wants to prevent any neighbors from discovering the network. What action does the user need to take?',
+                options: [
+                    'Enable WPA encryption.',
+                    'Configure a DNS server.',
+                    'Configure DMZ settings.',
+                    'Disable SSID broadcast.'
+                ],
+                correctAnswer: 'Disable SSID broadcast.'
+            },
+            {
+                id: 25,
+                type: 'multiple-choice',
+                question: 'If the default gateway is configured incorrectly on the host, what is the impact on communications?',
+                options: [
+                    'There is no impact on communications.',
+                    'The host is unable to communicate on the local network.',
+                    'The host can communicate with other hosts on the local network, but is unable to communicate with hosts on remote networks.',
+                    'The host can communicate with other hosts on remote networks, but is unable to communicate with hosts on the local network.'
+                ],
+                correctAnswer: 'The host can communicate with other hosts on the local network, but is unable to communicate with hosts on remote networks.'
+            },
+            {
+                id: 26,
+                type: 'multiple-choice',
+                question: 'Which command can an administrator execute to determine what interface a router will use to reach remote networks?',
+                options: [
+                    'show ip route',
+                    'show arp',
+                    'show protocols',
+                    'show interfaces'
+                ],
+                correctAnswer: 'show ip route'
+            },
+            {
+                id: 27,
+                type: 'multiple-choice',
+                question: 'At which layer of the OSI model would a logical address be added during encapsulation?',
+                options: [
+                    'network layer',
+                    'physical layer',
+                    'transport layer',
+                    'data link layer'
+                ],
+                correctAnswer: 'network layer'
+            },
+            {
+                id: 28,
+                type: 'multiple-choice',
+                question: 'A data center has recently updated a physical server to host multiple operating systems on a single CPU. The data center can now provide each customer with a separate web server without having to allocate an actual discrete server for each customer. What is the networking trend that is being implemented by the data center in this situation?',
+                options: [
+                    'maintaining communication integrity',
+                    'online collaboration',
+                    'virtualization',
+                    'BYOD'
+                ],
+                correctAnswer: 'virtualization'
+            },
+            {
+                id: 29,
+                type: 'matching',
+                question: 'Match each DHCP message type with its description.',
+                items: [
+                    { id: 'dhcprequest', text: 'DHCPREQUEST' },
+                    { id: 'dhcpdiscover', text: 'DHCPDISCOVER' },
+                    { id: 'dhcpack', text: 'DHCPACK' },
+                    { id: 'dhcpoffer', text: 'DHCPOFFER' }
+                ],
+                definitions: [
+                    { id: 'client_message', text: 'a client initiating a message to find a DHCP server' },
+                    { id: 'server_response', text: 'a DHCP server responding to the initial request by a client' },
+                    { id: 'client_accepting', text: 'the client accepting the IP address provided by the DHCP server' },
+                    { id: 'server_confirming', text: 'the DHCP server confirming that the address lease has been accepted' }
+                ],
+                correctAnswers: {
+                    'dhcprequest': 'client_accepting',
+                    'dhcpdiscover': 'client_message',
+                    'dhcpack': 'server_confirming',
+                    'dhcpoffer': 'server_response'
+                }
+            }
+        ];
+
+        // Shuffle helper function (Fisher-Yates algorithm)
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        // Prepare shuffled questions and options
+        function prepareShuffledQuestions() {
+            // Deep clone the questions array to avoid modifying the original
+            const shuffledQuestions = JSON.parse(JSON.stringify(questions));
+            
+            // Shuffle the questions array
+            shuffleArray(shuffledQuestions);
+            
+            // For each question, shuffle its options/items if applicable
+            shuffledQuestions.forEach(question => {
+                if (question.type === 'multiple-choice' || question.type === 'multiple-select') {
+                    // Create array of {text, isCorrect} objects to maintain correct answer relationship
+                    const options = question.options.map(option => ({
+                        text: option,
+                        isCorrect: question.type === 'multiple-choice' 
+                            ? option === question.correctAnswer
+                            : question.correctAnswers.includes(option)
+                    }));
+                    
+                    // Shuffle options
+                    shuffleArray(options);
+                    
+                    // Update question with shuffled options
+                    question.options = options.map(opt => opt.text);
+                    if (question.type === 'multiple-choice') {
+                        question.correctAnswer = options.find(opt => opt.isCorrect).text;
+                    } else {
+                        question.correctAnswers = options
+                            .filter(opt => opt.isCorrect)
+                            .map(opt => opt.text);
+                    }
+                } else if (question.type === 'matching') {
+                    // Shuffle both items and definitions while maintaining pairs
+                    shuffleArray(question.items);
+                    shuffleArray(question.definitions);
+                }
+            });
+            
+            return shuffledQuestions;
+        }
+
+        // The initialization should only happen in the DOMContentLoaded event handler
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize shuffled questions
+            shuffledQuestions = prepareShuffledQuestions();
+            
+            // Add event listeners
+            document.getElementById('next-button').addEventListener('click', goToNextQuestion);
+            document.getElementById('prev-button').addEventListener('click', goToPrevQuestion);
+            
+            // Initialize the quiz
+            renderQuestion();
+            updateQuestionCounter();
+        });
+
+        // Helper functions
+        function updateProgress() {
+            const progress = ((currentQuestion + 1) / shuffledQuestions.length) * 100;
+            document.getElementById('progress-fill').style.width = `${progress}%`;
+        }
+
+        function handleAnswerSelect(questionId, answer, isMultipleSelect = false) {
+            const question = shuffledQuestions.find(q => q.id === questionId);
+            
+            // If answer already exists for this question, don't allow changes
+            if (userAnswers[questionId] && !isMultipleSelect) {
+                return;
+            }
+            if (isMultipleSelect && userAnswers[questionId] && userAnswers[questionId].length >= question.correctAnswers.length) {
+                return;
+            }
+            
+            if (isMultipleSelect) {
+                const currentAnswers = userAnswers[questionId] || [];
+                // Don't allow deselecting once selected
+                if (!currentAnswers.includes(answer)) {
+                    const updatedAnswers = [...currentAnswers, answer];
+                    userAnswers[questionId] = updatedAnswers;
+                    
+                    // Show feedback for multiple select
+                    const options = document.querySelectorAll('.option');
+                    options.forEach(option => {
+                        const optionText = option.querySelector('.option-text').textContent;
+                        const isSelected = updatedAnswers.includes(optionText);
+                        const isCorrect = question.correctAnswers.includes(optionText);
+                        
+                        if (isSelected) {
+                            option.classList.add('selected');
+                            option.classList.add(isCorrect ? 'correct' : 'incorrect');
+                        }
+                    });
+                }
+            } else {
+                userAnswers[questionId] = answer;
+                
+                // Show feedback for multiple choice
+                const options = document.querySelectorAll('.option');
+                options.forEach(option => {
+                    const optionText = option.querySelector('.option-text').textContent;
+                    const isCorrect = optionText === question.correctAnswer;
+                    const isSelected = optionText === answer;
+                    
+                    if (isSelected) {
+                        option.classList.add('selected');
+                        option.classList.add(isCorrect ? 'correct' : 'incorrect');
+                        
+                        // Update checkmark/x-mark
+                        const content = option.querySelector('.option-content');
+                        const mark = document.createElement('span');
+                        mark.className = isCorrect ? 'checkmark' : 'x-mark';
+                        mark.textContent = isCorrect ? '✓' : '✗';
+                        content.appendChild(mark);
+                    }
+                });
+            }
+            renderQuestion();
+        }
+
+        function handleItemSelect(itemId, questionId) {
+            const question = shuffledQuestions.find(q => q.id === parseInt(questionId));
+            const item = question.items.find(i => i.id === itemId);
+            selectedItem = item;
+            renderQuestion();
+        }
+
+        function handleDefinitionSelect(definitionId, questionId) {
+            if (!selectedItem) return;
+            
+            const question = shuffledQuestions.find(q => q.id === parseInt(questionId.replace('q', '')));
+            const definition = question.definitions.find(d => d.id === definitionId);
+            if (!definition) return;
+            
+            const currentMatches = { ...(matchingAnswers[questionId] || {}) };
+            currentMatches[selectedItem.id] = definition.id;
+            matchingAnswers[questionId] = currentMatches;
+            
+            // Show feedback for matching
+            const isCorrect = question.correctAnswers[selectedItem.id] === definition.id;
+            const matchingItems = document.querySelectorAll('.matching-item');
+            matchingItems.forEach(item => {
+                if (item.textContent.includes(selectedItem.text) || 
+                    item.textContent.includes(definition.text)) {
+                    item.classList.add('matched');
+                    if (!isCorrect) {
+                        item.classList.add('incorrect');
+                    }
+                }
+            });
+            
+            selectedItem = null;
+            renderQuestion();
+        }
+
+        function getMatchedItemForDefinition(definitionId, questionId) {
+            const matches = matchingAnswers[questionId] || {};
+            for (const [itemId, matchedDefId] of Object.entries(matches)) {
+                if (matchedDefId === definitionId) {
+                    const question = shuffledQuestions.find(q => q.id === parseInt(questionId.replace('q', '')));
+                    if (question) {
+                        return question.items.find(item => item.id === itemId);
+                    }
+                }
+            }
+            return null;
+        }
+
+        function calculateScore() {
+            let score = 0;
+            let totalQuestions = shuffledQuestions.length;
+            
+            shuffledQuestions.forEach(question => {
+                if (question.type === 'matching') {
+                    const userMatches = matchingAnswers[`q${question.id}`] || {};
+                    const correctMatches = question.correctAnswers;
+                    let allCorrect = true;
+                    
+                    Object.keys(correctMatches).forEach(key => {
+                        if (userMatches[key] !== correctMatches[key]) {
+                            allCorrect = false;
+                        }
+                    });
+                    
+                    if (allCorrect && Object.keys(userMatches).length === Object.keys(correctMatches).length) {
+                        score += 1;
+                    }
+                } else if (question.type === 'multiple-select') {
+                    const userSelected = userAnswers[question.id] || [];
+                    const correctAnswers = question.correctAnswers;
+                    
+                    if (userSelected.length === correctAnswers.length && 
+                        userSelected.every(item => correctAnswers.includes(item))) {
+                        score += 1;
+                    }
+                } else { // multiple-choice
+                    if (userAnswers[question.id] === question.correctAnswer) {
+                        score += 1;
+                    }
+                }
+            });
+            
+            return { score, total: totalQuestions };
+        }
+
+        function renderMultipleChoice(question) {
+            return `
+                <div class="question-container">
+                    <h2 class="question-title">Question ${currentQuestion + 1}</h2>
+                    <p class="question-text">${question.question}</p>
+                    <div class="options-container">
+                        ${question.options.map((option, index) => {
+                            const isSelected = userAnswers[question.id] === option;
+                            const isCorrect = option === question.correctAnswer;
+                            let classes = [];
+                            const isAnswered = userAnswers[question.id] !== undefined;
+                            
+                            if (isSelected) {
+                                classes.push('selected');
+                                classes.push(isCorrect ? 'correct' : 'incorrect');
+                            }
+                            
+                            return `
+                                <div class="option ${classes.join(' ')}"
+                                     onclick="handleAnswerSelect(${question.id}, '${option}')"
+                                     style="${isAnswered && !isSelected ? 'pointer-events: none; opacity: 0.7;' : ''}">
+                                    <div class="option-content">
+                                        <span class="option-letter">${String.fromCharCode(65 + index)}</span>
+                                        <span class="option-text">${option}</span>
+                                        ${isSelected ? `
+                                            <span class="${isCorrect ? 'checkmark' : 'x-mark'}">
+                                                ${isCorrect ? '✓' : '✗'}
+                                            </span>
+                                        ` : ''}
+                                    </div>
+                                </div>
+                            `;
+                        }).join('')}
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderMultipleSelect(question) {
+            const userSelected = userAnswers[question.id] || [];
+            const hasAnswered = userSelected.length >= question.correctAnswers.length;
+            
+            return `
+                <div class="question-container">
+                    <h2 class="question-title">Question ${currentQuestion + 1}</h2>
+                    <p class="question-text">${question.question}</p>
+                    <div class="options-container">
+                        ${question.options.map((option, index) => {
+                            const isSelected = userSelected.includes(option);
+                            const isCorrect = question.correctAnswers.includes(option);
+                            let classes = [];
+                            
+                            if (isSelected) {
+                                classes.push('selected');
+                                classes.push(isCorrect ? 'correct' : 'incorrect');
+                            }
+                            
+                            return `
+                                <div class="option ${classes.join(' ')}"
+                                     onclick="handleAnswerSelect(${question.id}, '${option}', true)"
+                                     style="${(hasAnswered || isSelected) ? 'pointer-events: none; opacity: 0.7;' : ''}">
+                                    <div class="option-content">
+                                        <div class="checkbox ${isSelected ? 'checked' : ''}">
+                                            ${isSelected ? '✓' : ''}
+                                        </div>
+                                        <span class="option-text">${option}</span>
+                                        ${isSelected ? `
+                                            <span class="feedback-icon">
+                                                ${isCorrect ? '✓' : '✗'}
+                                            </span>
+                                        ` : ''}
+                                    </div>
+                                </div>
+                            `;
+                        }).join('')}
+                    </div>
+                    <div class="selection-hint">
+                        Select all that apply (${question.correctAnswers.length} correct answers)
+                        ${hasAnswered ? `
+                            <div class="feedback-message ${userSelected.every(ans => question.correctAnswers.includes(ans)) && 
+                                userSelected.length === question.correctAnswers.length ? 'correct' : 'incorrect'}">
+                                ${userSelected.every(ans => question.correctAnswers.includes(ans)) && 
+                                userSelected.length === question.correctAnswers.length
+                                    ? '✓ Correct!' 
+                                    : '✗ Incorrect'}
+                            </div>
+                        ` : ''}
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderMatching(question) {
+            const qKey = `q${question.id}`;
+            const matches = matchingAnswers[qKey] || {};
+            
+            return `
+                <div class="question-container">
+                    <h2 class="question-title">Question ${currentQuestion + 1}</h2>
+                    <p class="question-text">${question.question}</p>
+                    <div class="matching-container">
+                        <div class="matching-section">
+                            <h3>Terms</h3>
+                            ${question.items.map(item => {
+                                const isMatched = Object.keys(matches).includes(item.id);
+                                const isSelected = selectedItem && selectedItem.id === item.id;
+                                const isCorrectMatch = isMatched && matches[item.id] === question.correctAnswers[item.id];
+                                return `
+                                    <div class="matching-item ${isMatched ? 'matched' : ''} ${isSelected ? 'selected' : ''} ${isMatched && !isCorrectMatch ? 'incorrect' : ''}"
+                                         onclick="${!isMatched ? `handleItemSelect('${item.id}', ${question.id})` : ''}"
+                                    >
+                                        ${item.text}
+                                        ${isMatched ? '<span class="checkmark">✓</span>' : ''}
+                                    </div>
+                                `;
+                            }).join('')}
+                        </div>
+                        <div class="matching-section">
+                            <h3>Definitions</h3>
+                            ${question.definitions.map(definition => {
+                                const matchedItem = getMatchedItemForDefinition(definition.id, qKey);
+                                const isCorrectMatch = matchedItem && question.correctAnswers[matchedItem.id] === definition.id;
+                                return `
+                                    <div class="matching-item ${matchedItem ? 'matched' : ''} ${matchedItem && !isCorrectMatch ? 'incorrect' : ''}"
+                                         onclick="handleDefinitionSelect('${definition.id}', '${qKey}')"
+                                    >
+                                        ${definition.text}
+                                        ${matchedItem ? `
+                                            <div class="matched-term">
+                                                Matched with: ${matchedItem.text}
+                                                <span class="checkmark">✓</span>
+                                            </div>
+                                        ` : ''}
+                                    </div>
+                                `;
+                            }).join('')}
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function goToNextQuestion() {
+            if (currentQuestion < shuffledQuestions.length - 1) {
+                currentQuestion++;
+                renderQuestion();
+            } else {
+                showResults = true;
+                renderResults();
+            }
+        }
+
+        function goToPrevQuestion() {
+            if (currentQuestion > 0) {
+                currentQuestion--;
+                renderQuestion();
+            }
+        }
+
+        function restartQuiz() {
+            currentQuestion = 0;
+            userAnswers = {};
+            matchingAnswers = {};
+            selectedItem = null;
+            showResults = false;
+            // Reshuffle questions on restart
+            shuffledQuestions = prepareShuffledQuestions();
+            document.querySelector('.nav-container').style.display = 'flex';
+            renderQuestion();
+        }
+
+        function renderResults() {
+            const { score, total } = calculateScore();
+            const percentage = Math.round((score / total) * 100);
+            
+            let grade = 'F';
+            if (percentage >= 90) grade = 'A';
+            else if (percentage >= 80) grade = 'B';
+            else if (percentage >= 70) grade = 'C';
+            else if (percentage >= 60) grade = 'D';
+            
+            const content = `
+                <div class="results-container">
+                    <h2>Quiz Results</h2>
+                    <div class="grade">${grade}</div>
+                    <div class="score">${percentage}%</div>
+                    <p>You answered ${score} out of ${total} questions correctly.</p>
+                    <button class="restart-button" onclick="restartQuiz()">
+                        Restart Quiz
+                    </button>
+                </div>
+            `;
+            
+            document.getElementById('question-content').innerHTML = content;
+            document.querySelector('.nav-container').style.display = 'none';
+        }
+
+        function renderQuestion() {
+            if (showResults) {
+                renderResults();
+                return;
+            }
+
+            const question = shuffledQuestions[currentQuestion];
+            let content = '';
+
+            switch (question.type) {
+                case 'multiple-choice':
+                    content = renderMultipleChoice(question);
+                    break;
+                case 'multiple-select':
+                    content = renderMultipleSelect(question);
+                    break;
+                case 'matching':
+                    content = renderMatching(question);
+                    break;
+            }
+
+            document.getElementById('question-content').innerHTML = content;
+            
+            // Update navigation buttons
+            document.getElementById('prev-button').disabled = currentQuestion === 0;
+            document.getElementById('next-button').textContent = 
+                currentQuestion === shuffledQuestions.length - 1 ? 'Finish' : 'Next';
+            
+            // Update progress and counter
+            updateProgress();
+            updateQuestionCounter();
+        }
+
+        function updateQuestionCounter() {
+            const currentQuestionSpan = document.getElementById('current-question');
+            const totalQuestionsSpan = document.getElementById('total-questions');
+            if (currentQuestionSpan && totalQuestionsSpan) {
+                currentQuestionSpan.textContent = (currentQuestion + 1).toString();
+                totalQuestionsSpan.textContent = shuffledQuestions.length.toString();
+            }
+        }
+    </script>
+</body>
+</html>
