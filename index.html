@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Network Quiz</title>
+    <title>Networking Essentials Complete Quiz</title>
     <style>
         /* Base styles */
         body {
@@ -257,20 +257,19 @@
             padding: 2rem;
             text-align: center;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
         }
 
         .results-container h2 {
             font-size: 1.5rem;
             font-weight: bold;
-            color: #1e40af;
+            color: #60a5fa;
             margin-bottom: 1.5rem;
         }
 
         .score {
             font-size: 2.25rem;
             font-weight: bold;
-            color: #2563eb;
+            color: #60a5fa;
             margin-bottom: 1rem;
         }
 
@@ -282,26 +281,11 @@
             font-weight: 500;
             cursor: pointer;
             transition: all 0.2s;
+            border: none;
         }
 
         .restart-button:hover {
             background-color: #1d4ed8;
-        }
-
-        /* Progress bar */
-        .progress-bar {
-            width: 100%;
-            height: 0.625rem;
-            background-color: #e5e7eb;
-            border-radius: 9999px;
-            margin-bottom: 1.5rem;
-        }
-
-        .progress-fill {
-            height: 100%;
-            background-color: #4f46e5;
-            border-radius: 9999px;
-            transition: width 0.3s ease-out;
         }
 
         /* Add to the CSS section */
@@ -393,24 +377,70 @@
             background-color: #991b1b;
             color: white;
         }
+
+        .jump-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 1rem;
+        }
+
+        .jump-select {
+            padding: 0.5rem;
+            background-color: #2d2d2d;
+            color: #e5e7eb;
+            border: 1px solid #404040;
+            border-radius: 0.375rem;
+            margin-left: 0.5rem;
+            cursor: pointer;
+        }
+
+        .grade {
+            font-size: 5rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        .grade.A {
+            color: #10b981;
+        }
+
+        .grade.B {
+            color: #60a5fa;
+        }
+
+        .grade.C {
+            color: #f59e0b;
+        }
+
+        .grade.D {
+            color: #f97316;
+        }
+
+        .grade.F {
+            color: #ef4444;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="quiz-header">
-            <h1>Networking Concepts Quiz</h1>
-            <p>Test your knowledge of network security, infrastructure, and protocols</p>
+            <h1>Networking Essentials Complete Quiz</h1>
+            <p>Test your knowledge with this 60-question assessment on networking concepts, security, protocols, and infrastructure</p>
         </div>
         
         <div id="quiz-container">
             <div class="progress-bar">
                 <div class="progress-fill" id="progress-fill"></div>
             </div>
+            <div class="jump-container">
+                <label for="jump-select">Jump to question:</label>
+                <select id="jump-select" class="jump-select"></select>
+            </div>
             <div id="question-content"></div>
             <div class="nav-container">
                 <button id="prev-button" class="nav-button nav-button-secondary">Previous</button>
                 <div class="question-counter">
-                    Question <span id="current-question">1</span> of <span id="total-questions">29</span>
+                    Question <span id="current-question">1</span> of <span id="total-questions">60</span>
                 </div>
                 <button id="next-button" class="nav-button nav-button-primary">Next</button>
             </div>
@@ -446,7 +476,8 @@
                     'spyware': 'gathers_info',
                     'tracking_cookies': 'allow_personalization',
                     'popups': 'advertising_windows'
-                }
+                },
+                explanation: "Spyware gathers personal information, pop-ups are advertising windows, and tracking cookies allow personalization for visited websites."
             },
             {
                 id: 2,
@@ -458,7 +489,8 @@
                     'DDoS',
                     'SYN flooding'
                 ],
-                correctAnswer: 'brute force'
+                correctAnswer: 'brute force',
+                explanation: "In a brute force attack, an unauthorized person will try to gain access to a system by sending as many passwords as possible as rapidly as possible."
             },
             {
                 id: 3,
@@ -472,7 +504,8 @@
                     'malware',
                     'pretexting'
                 ],
-                correctAnswers: ['vishing', 'phishing', 'pretexting']
+                correctAnswers: ['vishing', 'phishing', 'pretexting'],
+                explanation: "Attacks aimed at exploiting human behavior such as pretexting, phishing, and vishing are commonly used by hackers to obtain information directly from authorized users."
             },
             {
                 id: 4,
@@ -485,7 +518,8 @@
                     'It identifies the wireless LAN.',
                     'It translates an internal address or group of addresses into an outside, public address.'
                 ],
-                correctAnswer: 'It encrypts data between the wireless client and the access point.'
+                correctAnswer: 'It encrypts data between the wireless client and the access point.',
+                explanation: "WEP is used to encrypt data between the wireless client and the access point. DNS translates IP addresses into easy-to-remember domain names. NAT translates an internal address or group of addresses into an outside, public address. An SSID allows the access point to inform clients of its presence."
             },
             {
                 id: 5,
@@ -497,10 +531,38 @@
                     'port forwarding',
                     'static NAT'
                 ],
-                correctAnswer: 'port forwarding'
+                correctAnswer: 'port forwarding',
+                explanation: "Port forwarding can be used to permit other users to reach devices on an internal network through the Internet. The firewall in the router determines if the traffic should be forwarded to an internal device based on the port number. Port numbers are associated with specific services, such as FTP, HTTP, HTTPS, and POP3."
             },
             {
                 id: 6,
+                type: 'multiple-choice',
+                question: 'What is an inherent security vulnerability of SSID broadcasting?',
+                options: [
+                    'It broadcasts the identity of the network.',
+                    'It allows unauthenticated access to the wireless network.',
+                    'It allows any host to join the wireless network.',
+                    'It sends traffic unencrypted between the wireless access point and the client.'
+                ],
+                correctAnswer: 'It broadcasts the identity of the network.',
+                explanation: "By default, wireless routers and access points broadcast SSIDs in plain text to all computers within the wireless range. This represents a security risk because an attacker can easily intercept the wireless signals and read plain text messages."
+            },
+            {
+                id: 7,
+                type: 'multiple-choice',
+                question: 'When a newly purchased client laptop connects to a local area network, what IP address does the laptop use as a destination address when requesting a dynamically assigned address?',
+                options: [
+                    '255.255.255.0',
+                    '192.168.0.1',
+                    '192.168.0.100',
+                    '255.255.255.255',
+                    '192.168.0.255'
+                ],
+                correctAnswer: '255.255.255.255',
+                explanation: "When a new client device is installed on a network that uses dynamic IP addressing, the client will send out a DHCP request message with the destination IPv4 address of 255.255.255.255."
+            },
+            {
+                id: 8,
                 type: 'multiple-choice',
                 question: 'A DHCP server is used to assign IP addresses dynamically to the hosts on a network. The address pool is configured with 192.168.10.0/24. There are 3 printers on this network that need to use reserved static IP addresses from the pool. How many IP addresses in the pool are left to be assigned to other hosts?',
                 options: [
@@ -509,10 +571,88 @@
                     '253',
                     '251'
                 ],
-                correctAnswer: '251'
+                correctAnswer: '251',
+                explanation: "If the block of addresses allocated to the pool is 192.168.10.0/24, there are 254 IP addresses to be assigned to hosts on the network. As there are 3 printers which need to have their addresses assigned statically, then there are 251 IP addresses left for assignment."
             },
             {
-                id: 7,
+                id: 9,
+                type: 'matching',
+                question: 'Match each DHCP message type with its description.',
+                items: [
+                    { id: 'dhcpack', text: 'DHCPACK' },
+                    { id: 'dhcprequest', text: 'DHCPREQUEST' },
+                    { id: 'dhcpdiscover', text: 'DHCPDISCOVER' },
+                    { id: 'dhcpoffer', text: 'DHCPOFFER' }
+                ],
+                definitions: [
+                    { id: 'client_initiating', text: 'a client initiating a message to find a DHCP server' },
+                    { id: 'server_responding', text: 'a DHCP server responding to the initial request by a client' },
+                    { id: 'client_accepting', text: 'the client accepting the IP address provided by the DHCP server' },
+                    { id: 'server_confirming', text: 'the DHCP server confirming that the address lease has been accepted' }
+                ],
+                correctAnswers: {
+                    'dhcpdiscover': 'client_initiating',
+                    'dhcpoffer': 'server_responding',
+                    'dhcprequest': 'client_accepting',
+                    'dhcpack': 'server_confirming'
+                },
+                explanation: "DHCPDISCOVER is a client initiating a message to find a DHCP server. DHCPOFFER is a DHCP server responding to the initial request by a client. DHCPREQUEST is the client accepting the IP address provided by the DHCP server. DHCPACK is the DHCP server confirming that the lease has been accepted."
+            },
+            {
+                id: 10,
+                type: 'multiple-choice',
+                question: 'A client device on an Ethernet segment needs an IP address in order to communicate on the network. A DHCP server with IP address 192.168.1.1 has been configured and enabled on the network. How will a client device obtain a usable IP address for this network?',
+                options: [
+                    'Use a statically configured IP address from the pool of IP addresses that is offered by the DHCP server.',
+                    'Send a DHCPREQUEST packet to IP address 255.255.255.255.',
+                    'Send a DHCPDISCOVER message to physical address FF-FF-FF-FF-FF-FF.',
+                    'Send a DHCPACK packet to the default gateway address.'
+                ],
+                correctAnswer: 'Send a DHCPDISCOVER message to physical address FF-FF-FF-FF-FF-FF.',
+                explanation: "Like IP addressing, there is also a special MAC address for broadcast purposes: FF-FF-FF-FF-FF-FF. When a DHCP client needs to send a DHCP Discover message in order to seek DHCP servers, the client will use this MAC address as the destination MAC address in the Ethernet frame. It does this because it has no knowledge of the IP and MAC addresses of DHCP servers."
+            },
+            {
+                id: 11,
+                type: 'multiple-select',
+                question: 'Which two criteria are used to help select a network medium for a network? (Choose two.)',
+                options: [
+                    'the distance the selected medium can successfully carry a signal',
+                    'the environment where the selected medium is to be installed',
+                    'the number of intermediate devices that are installed in the network',
+                    'the types of data that need to be prioritized',
+                    'the cost of the end devices that are used in the network'
+                ],
+                correctAnswers: ['the distance the selected medium can successfully carry a signal', 'the environment where the selected medium is to be installed'],
+                explanation: "Criteria for choosing a network medium include the following: The distance the selected medium can successfully carry a signal in the environment in which the selected medium is to be installed, the amount of data and the speed at which the data must be transmitted, and the cost of the medium and its installation."
+            },
+            {
+                id: 12,
+                type: 'multiple-choice',
+                question: 'What is an advantage of using standards to develop and implement protocols?',
+                options: [
+                    'Different manufacturers are free to apply different requirements when implementing a protocol.',
+                    'Standards provide flexibility for manufacturers to create devices that comply with unique requirements.',
+                    'Products from different manufacturers can interoperate successfully.',
+                    'A particular protocol can only be implemented by one manufacturer.'
+                ],
+                correctAnswer: 'Products from different manufacturers can interoperate successfully.',
+                explanation: "Standards-based protocols enable products from different manufacturers to interoperate successfully. Standards-based protocols enable many manufacturers to implement that protocol. If different manufacturers implement different requirements within the same protocol, then their products will not be interoperable."
+            },
+            {
+                id: 13,
+                type: 'multiple-choice',
+                question: 'At which layer of the OSI model would a logical address be added during encapsulation?',
+                options: [
+                    'physical layer',
+                    'network layer',
+                    'data link layer',
+                    'transport layer'
+                ],
+                correctAnswer: 'network layer',
+                explanation: "Logical addresses, also known as IP addresses, are added at the network layer. Physical addresses are added at the data link layer. Port addresses are added at the transport layer. No addresses are added at the physical layer."
+            },
+            {
+                id: 14,
                 type: 'multiple-choice',
                 question: 'Which wireless RF band do IEEE 802.11b/g devices use?',
                 options: [
@@ -521,27 +661,24 @@
                     '60 GHz',
                     '5 GHz'
                 ],
-                correctAnswer: '2.4 GHz'
+                correctAnswer: '2.4 GHz',
+                explanation: "900 MHz is an FCC wireless technology that was used before development of the 802.11 standards. 900 MHz devices have a larger coverage range than the higher frequencies have and do not require line of sight between devices. 802.11b/g/n/ad devices all operate at 2.4 GHz. 802.11a/n/ac/ad devices operate at 5 GHz, and 802.11ad devices operate at 60 GHz."
             },
             {
-                id: 8,
+                id: 15,
                 type: 'multiple-choice',
-                question: `
-                    <div class="question-image-container">
-                        <img src="https://i.imgur.com/XqabsTb.png" alt="Router ports diagram" class="question-image">
-                    </div>
-                    <p>Which router port connects to the modem provided by the service provider?</p>
-                `,
+                question: 'Which router port connects to the modem provided by the service provider?',
                 options: [
-                    'A',
-                    'B',
-                    'C',
-                    'D'
+                    'A (LAN port)',
+                    'B (LAN port)',
+                    'C (Internet port)',
+                    'D (Power port)'
                 ],
-                correctAnswer: 'C'
+                correctAnswer: 'C (Internet port)',
+                explanation: "The ports shown in the diagram are used as follows: The LAN ports, A and B, are used to connect wired devices on the home network. The Internet port, C, is connected to the modem. The port, labeled D, is the 5V DC power port that supplies power to the router."
             },
             {
-                id: 9,
+                id: 16,
                 type: 'multiple-choice',
                 question: 'Which type of device filtering can be enabled on some wireless access points or wireless routers?',
                 options: [
@@ -550,10 +687,25 @@
                     'MAC address',
                     'IP address'
                 ],
-                correctAnswer: 'MAC address'
+                correctAnswer: 'MAC address',
+                explanation: "On wireless access points, MAC addresses can be manually entered to filter which devices are allowed on the wireless network."
             },
             {
-                id: 10,
+                id: 17,
+                type: 'multiple-select',
+                question: 'Using a systematic troubleshooting approach, a help desk technician suspects a problem at Layer 3 of the OSI model. In gathering information, which two questions are associated with Layer 3? (Choose two.)',
+                options: [
+                    'From the PC, is the default gateway reachable using the ping command?',
+                    'Is there a link light on the network card?',
+                    'Is the PC configured for DHCP?',
+                    'Is the network cable plugged in?',
+                    'Does a browser connection to www.cisco.com work?'
+                ],
+                correctAnswers: ['From the PC, is the default gateway reachable using the ping command?', 'Is the PC configured for DHCP?'],
+                explanation: "IP address configuration and the ping command are associated with Layer 3 protocols. Visiting a web server is associated with the application layer. An Ethernet cable connection and NIC are associated with Layer 1 functions."
+            },
+            {
+                id: 18,
                 type: 'multiple-choice',
                 question: 'A customer calls the help line to report a computer problem. The help line technician responds and works with the customer for some time. However, the technician cannot identify the root cause of the problem. What should the technician do to help the customer?',
                 options: [
@@ -562,10 +714,11 @@
                     'Suggest that the customer visit the support website for more detailed information.',
                     'Ask for the email address of the customer in order to send all the support documents for the computer.'
                 ],
-                correctAnswer: 'Tell the customer that a ticket is created and another technician will contact the user soon.'
+                correctAnswer: 'Tell the customer that a ticket is created and another technician will contact the user soon.',
+                explanation: "When the first line technician cannot identify the cause of the problem, the technician should create a ticket and initiate the escalation process. Because the cause of the problem is not identified, the technician should not authorize the replacement process. The customer should not be sent to explore further troubleshooting."
             },
             {
-                id: 11,
+                id: 19,
                 type: 'multiple-choice',
                 question: 'During a move, employee workstations were disconnected from the network and reconnected in new offices. However, after the move a few workstations cannot get a valid IP address. What should be checked first to identify the root cause of the problem?',
                 options: [
@@ -574,10 +727,11 @@
                     'Check the operation status of the DHCP server.',
                     'Make sure the cables are functional and properly plugged.'
                 ],
-                correctAnswer: 'Make sure the cables are functional and properly plugged.'
+                correctAnswer: 'Make sure the cables are functional and properly plugged.',
+                explanation: "Because the workstations have just been moved from one location to another, the internal OS and applications have not changed. The first thing to check should be the Ethernet cable, including the type of cable used and whether the cables are properly plugged into both the workstation and the jack on the wall."
             },
             {
-                id: 12,
+                id: 20,
                 type: 'multiple-choice',
                 question: 'A user is setting up a home wireless network. Which type of device must the user have in order to establish the wireless network and provide access to the internet for multiple home devices?',
                 options: [
@@ -586,10 +740,24 @@
                     'wireless router',
                     'patch panel'
                 ],
-                correctAnswer: 'wireless router'
+                correctAnswer: 'wireless router',
+                explanation: "A wireless router connects multiple wireless devices to the network. It will then aggregate the internet access requests from home devices to the internet."
             },
             {
-                id: 13,
+                id: 21,
+                type: 'multiple-choice',
+                question: 'A consumer places a smartphone close to a pay terminal at a store and the shopping charge is successfully paid. Which type of wireless technology was used?',
+                options: [
+                    'NFC',
+                    'Wi-Fi',
+                    '3G',
+                    'Bluetooth'
+                ],
+                correctAnswer: 'NFC',
+                explanation: "NFC is a wireless technology that allows data to be exchanged between devices that are in very close proximity to each other."
+            },
+            {
+                id: 22,
                 type: 'multiple-choice',
                 question: 'When troubleshooting network problems, where would a network administrator find the configuration information, such as the computer names and the IP addresses that are used?',
                 options: [
@@ -598,10 +766,11 @@
                     'physical topology diagram',
                     'DHCP server'
                 ],
-                correctAnswer: 'logical topology diagram'
+                correctAnswer: 'logical topology diagram',
+                explanation: "A logical topology usually contains relevant network configuration information, such as the following: Device names, Device IP addressing, Network designations, Configuration information."
             },
             {
-                id: 14,
+                id: 23,
                 type: 'multiple-choice',
                 question: 'Which network migration technique encapsulates IPv6 packets inside IPv4 packets to carry them over IPv4 network infrastructures?',
                 options: [
@@ -610,10 +779,25 @@
                     'dual-stack',
                     'translation'
                 ],
-                correctAnswer: 'tunneling'
+                correctAnswer: 'tunneling',
+                explanation: "The tunneling migration technique encapsulates an IPv6 packet inside an IPv4 packet. Encapsulation assembles a message and adds information to each layer in order to transmit the data over the network. Translation is a migration technique that allows IPv6-enabled devices to communicate with IPv4-enabled devices using a translation technique similar to NAT for IPv4. The dual-stack migration technique allows IPv4 and IPv6 protocol stacks to coexist on the same network simultaneously."
             },
             {
-                id: 15,
+                id: 24,
+                type: 'multiple-select',
+                question: 'A small accounting office is setting up a wireless network to connect end devices and to provide internet access. In which two scenarios does a wireless router perform Network Address Translation (NAT)? (Choose two.)',
+                options: [
+                    'when a host is sending packets to a remote site owned by the manufacturer of the wireless router in order to request a digital copy of the device manual',
+                    'when a host is sending HTTP packets to the wireless router in order to update the network addressing of the LAN',
+                    'when a host is sending packets to the ISP in order to request a speed increase for Internet services',
+                    'when a host is sending a print job to a network printer on the LAN',
+                    'when a host is sending packets to a local server in order to update the network media settings and music playlists'
+                ],
+                correctAnswers: ['when a host is sending packets to a remote site owned by the manufacturer of the wireless router in order to request a digital copy of the device manual', 'when a host is sending packets to the ISP in order to request a speed increase for Internet services'],
+                explanation: "A wireless router will perform Network Address Translation (NAT) whenever a private (local) source IPv4 address is translated to a public (global) address."
+            },
+            {
+                id: 25,
                 type: 'multiple-choice',
                 question: 'If the default gateway is configured incorrectly on a host, what is the impact on communications?',
                 options: [
@@ -622,10 +806,11 @@
                     'The host is unable to communicate with hosts on remote networks.',
                     'The host cannot get an IP address from the DHCP server.'
                 ],
-                correctAnswer: 'The host is unable to communicate with hosts on remote networks.'
+                correctAnswer: 'The host is unable to communicate with hosts on remote networks.',
+                explanation: "In data communication, the default gateway device is involved only when a host needs to communicate with other hosts on another network. The default gateway address identifies a network device that a host device uses to communicate with devices on other networks. The default gateway device is not used when a host communicates with other hosts on the same network."
             },
             {
-                id: 16,
+                id: 26,
                 type: 'multiple-select',
                 question: 'What are two common media used in networks? (Choose two.)',
                 options: [
@@ -635,10 +820,25 @@
                     'copper',
                     'nylon'
                 ],
-                correctAnswers: ['fiber', 'copper']
+                correctAnswers: ['fiber', 'copper'],
+                explanation: "Common media used in networks include copper, glass or plastic optical fiber, and wireless."
             },
             {
-                id: 17,
+                id: 27,
+                type: 'multiple-select',
+                question: 'Which two types of interference may affect the data throughput on UTP cables? (Choose two.)',
+                options: [
+                    'temperature',
+                    'crosstalk',
+                    'noise',
+                    'EMI',
+                    'moisture'
+                ],
+                correctAnswers: ['crosstalk', 'EMI'],
+                explanation: "Unshielded twisted-pair (UTP) cabling is sensitive to the interference introduced by electromagnetic interference (EMI) and crosstalk."
+            },
+            {
+                id: 28,
                 type: 'multiple-select',
                 question: 'What are two wiring schemes defined by the TIA/EIA organization for Ethernet installation in homes and businesses? (Choose two.)',
                 options: [
@@ -648,10 +848,11 @@
                     'UTP',
                     'RJ-45'
                 ],
-                correctAnswers: ['T568B', 'T568A']
+                correctAnswers: ['T568B', 'T568A'],
+                explanation: "The TIA/EIA organization defines the wiring schemes T568A and T568B for typical Ethernet installations. Each wiring scheme defines a specific order of wire connections on the end of the cable."
             },
             {
-                id: 18,
+                id: 29,
                 type: 'multiple-choice',
                 question: 'A host needs to reach another host on a remote network, but the ARP cache has no mapping entries. To what destination address will the host send an ARP request?',
                 options: [
@@ -660,10 +861,11 @@
                     'the broadcast MAC address',
                     'the subnet broadcast IP address'
                 ],
-                correctAnswer: 'the broadcast MAC address'
+                correctAnswer: 'the broadcast MAC address',
+                explanation: "ARP requests are sent when a host does not have an IP to MAC mapping for a destination in the ARP cache. ARP requests are sent to the Ethernet broadcast of FF:FF:FF:FF:FF:FF. In this example because the address of the remote host is unknown, an ARP request is sent to the Ethernet broadcast to resolve the MAC address of the default gateway that is used to reach the remote host."
             },
             {
-                id: 19,
+                id: 30,
                 type: 'multiple-choice',
                 question: 'Which type of address does a switch use to build the MAC address table?',
                 options: [
@@ -672,10 +874,11 @@
                     'destination IP address',
                     'source IP address'
                 ],
-                correctAnswer: 'source MAC address'
+                correctAnswer: 'source MAC address',
+                explanation: "When a switch receives a frame with a source MAC address that is not in the MAC address table, the switch will add that MAC address to the table and map that address to a specific port. Switches do not use IP addressing in the MAC address table."
             },
             {
-                id: 20,
+                id: 31,
                 type: 'multiple-select',
                 question: 'What are two benefits of using a layered network model? (Choose two.)',
                 options: [
@@ -685,10 +888,11 @@
                     'It ensures a device at one layer can function at the next higher layer.',
                     'It speeds up packet delivery.'
                 ],
-                correctAnswers: ['It prevents technology in one layer from affecting other layers.', 'It assists in protocol design.']
+                correctAnswers: ['It prevents technology in one layer from affecting other layers.', 'It assists in protocol design.'],
+                explanation: "Some vendors have developed their own reference models and protocols. Today, if a device is to communicate on the Internet, the device must use the TCP/IP model. The benefits of using a layered model are as follows: assists in protocol design, fosters competition between vendors, prevents a technology that functions at one layer from affecting any other layer, provides a common language for describing network functionality, helps in visualizing the interaction between each layer and protocols between each layer."
             },
             {
-                id: 21,
+                id: 32,
                 type: 'multiple-select',
                 question: 'Which two devices are considered end devices? (Choose two.)',
                 options: [
@@ -698,10 +902,11 @@
                     'switch',
                     'printer'
                 ],
-                correctAnswers: ['laptop', 'printer']
+                correctAnswers: ['laptop', 'printer'],
+                explanation: "A device that forms the interface between users and the underlying communication network is known as an end device. End devices are either the source or destination of a message."
             },
             {
-                id: 22,
+                id: 33,
                 type: 'multiple-choice',
                 question: 'Which factor does not influence throughput?',
                 options: [
@@ -710,10 +915,11 @@
                     'the latency that is created by the number of network devices encountered between source and destination',
                     'the type of data that is being transmitted'
                 ],
-                correctAnswer: 'the type of data that is being transmitted'
+                correctAnswer: 'the operating system that is used by end devices',
+                explanation: "Throughput is the amount of data that has successfully moved from one place to another in a given time period. Several factors could influence throughput, including the amount and type of data being transmitted and latency."
             },
             {
-                id: 23,
+                id: 34,
                 type: 'multiple-choice',
                 question: 'What is a characteristic of a peer-to-peer application?',
                 options: [
@@ -722,10 +928,142 @@
                     'Each device using the application provides a user interface and runs a background service.',
                     'Both devices initiate a three-way handshake to determine who is initiating the communication.'
                 ],
-                correctAnswer: 'Each device using the application provides a user interface and runs a background service.'
+                correctAnswer: 'Each device using the application provides a user interface and runs a background service.',
+                explanation: "Peer-to-peer networks exist directly between client devices, with no centralized resources or authentication. Hybrid peer-to-peer systems also exist that decentralize resource sharing but can use centralized indexes to point to the resource locations."
             },
             {
-                id: 24,
+                id: 35,
+                type: 'multiple-choice',
+                question: 'Using default settings, what is the next step in the switch boot sequence after the IOS loads from flash?',
+                options: [
+                    'Search for a backup IOS in ROM.',
+                    'Load the bootstrap program from ROM.',
+                    'Load the running-config file from RAM.',
+                    'Locate and load the startup-config file from NVRAM.',
+                    'Perform the POST routine.'
+                ],
+                correctAnswer: 'Locate and load the startup-config file from NVRAM.',
+                explanation: "After the IOS is loaded from flash, the switch will locate and load the startup-config file from NVRAM."
+            },
+            {
+                id: 36,
+                type: 'multiple-select',
+                question: 'Which two files, if found, are copied into RAM as a router with the default configuration register setting boots up? (Choose two.)',
+                options: [
+                    'running configuration',
+                    'startup configuration',
+                    'POST diagnostics',
+                    'IOS image file'
+                ],
+                correctAnswers: ['startup configuration', 'IOS image file'],
+                explanation: "The two primary files needed for bootup are the IOS image file and startup configuration, which are copied into RAM to maximize performance. If a router configuration register is set to 0x2102, the router will attempt to load the IOS image from flash memory and the startup configuration file from NVRAM."
+            },
+            {
+                id: 37,
+                type: 'multiple-select',
+                question: 'What are two features of protocols used within the TCP/IP protocol stack? (Choose two.)',
+                options: [
+                    'The Internet Layer IP protocol has built in mechanisms for ensuring the reliable transmission and receipt of data.',
+                    'TCP mechanisms retransmit data when an acknowledgment is not received from the destination system within a set period of time.',
+                    'The same Transport Layer source port is used for all of the tabs opened at the same time within a web browser.',
+                    'TCP and UDP destination port numbers are dynamically generated by the sending device in order to track the responses to requests.',
+                    'UDP is used when an application must be delivered as quickly as possible and some loss of data can be tolerated.'
+                ],
+                correctAnswers: ['TCP mechanisms retransmit data when an acknowledgment is not received from the destination system within a set period of time.', 'UDP is used when an application must be delivered as quickly as possible and some loss of data can be tolerated.'],
+                explanation: "Application programmers make decisions about which protocols to use to transport the data to and from their applications based on whether the application can tolerate any lost data. Live streaming and voice transmissions can use UDP because if a few data packets are lost, the quality of the video and audio is not seriously impacted. TCP is used when all data must be complete and accurate."
+            },
+            {
+                id: 38,
+                type: 'multiple-choice',
+                question: 'A student is uploading files from a phone to a server on another network. Which layer of the TCP/IP model is responsible for providing an addressing scheme to transmit the data between the devices?',
+                options: [
+                    'transport',
+                    'application',
+                    'network access',
+                    'internet'
+                ],
+                correctAnswer: 'internet',
+                explanation: "The internet layer provides addresses for the purpose of connecting end devices on different networks."
+            },
+            {
+                id: 39,
+                type: 'multiple-choice',
+                question: 'Which statement correctly describes data transmission at the transport layer?',
+                options: [
+                    'A single datagram can include both a TCP and a UDP header.',
+                    'Both UDP and TCP use port numbers.',
+                    'Segmentation is provided by sequence numbers when UDP is used.',
+                    'Segmentation is provided by the window size field when the TCP protocol is used.',
+                    'Retransmission of lost packets is provided by both TCP and UDP.'
+                ],
+                correctAnswer: 'Both UDP and TCP use port numbers.',
+                explanation: "Segmentation is handled at Layer 4 by TCP sequence numbers. UDP does not have sequence numbers in the header, but instead, lets the application handle reordering if it is necessary. Only TCP provides reliable deliver and retransmits data. Each segment has either a TCP header or a UDP header; it cannot contain both."
+            },
+            {
+                id: 40,
+                type: 'multiple-choice',
+                question: 'What type of technology converts analog voice signals into digital data?',
+                options: [
+                    'SNMP',
+                    'POP3',
+                    'VoIP',
+                    'SMTP'
+                ],
+                correctAnswer: 'VoIP',
+                explanation: "Voice over IP (VoIP) is a technology that is used with making telephone calls across a network or internet and it converts analog voice signals into digital data."
+            },
+            {
+                id: 41,
+                type: 'matching',
+                question: 'Match the protocol with the function.',
+                items: [
+                    { id: 'dns', text: 'DNS' },
+                    { id: 'dhcp', text: 'DHCP' },
+                    { id: 'ssh', text: 'SSH' }
+                ],
+                definitions: [
+                    { id: 'auto_config', text: 'automatically configures hosts with IP addresses' },
+                    { id: 'remote_access', text: 'provides remote access to servers' },
+                    { id: 'resolves_names', text: 'resolves Internet names to IP addresses' }
+                ],
+                correctAnswers: {
+                    'dns': 'resolves_names',
+                    'dhcp': 'auto_config',
+                    'ssh': 'remote_access'
+                },
+                explanation: "DNS resolves Internet names to IP addresses. DHCP automatically configures hosts with IP addresses. SSH provides remote access to servers."
+            },
+            {
+                id: 42,
+                type: 'multiple-select',
+                question: 'While a network security product is being deployed, a customizable list of allowable protocols is shown. Which three protocols should be allowed to provide for the use of email on a network? (Choose three.)',
+                options: [
+                    'SMTP',
+                    'IMAP4',
+                    'Telnet',
+                    'DNS',
+                    'POP3',
+                    'HTTP',
+                    'TFTP'
+                ],
+                correctAnswers: ['SMTP', 'IMAP4', 'POP3'],
+                explanation: "The email protocols used on a network are SMTP, POP3, and IMAP4. SMTP is used to send messages to a local email server, whereas POP and IMAP are used to receive email."
+            },
+            {
+                id: 43,
+                type: 'multiple-choice',
+                question: 'In software defined network architecture, what function is removed from network devices and performed by an SDN controller?',
+                options: [
+                    'application policies',
+                    'control plane',
+                    'security',
+                    'data plane'
+                ],
+                correctAnswer: 'control plane',
+                explanation: "In network virtualization, the control plane function of each network device is removed and is performed by a centralized controller. The controller then can communicate control plane functions to each of the network devices. This allows the network devices to focus all resources on forwarding plane functions."
+            },
+            {
+                id: 44,
                 type: 'multiple-choice',
                 question: 'A user is configuring a wireless access point and wants to prevent any neighbors from discovering the network. What action does the user need to take?',
                 options: [
@@ -734,46 +1072,11 @@
                     'Configure DMZ settings.',
                     'Disable SSID broadcast.'
                 ],
-                correctAnswer: 'Disable SSID broadcast.'
+                correctAnswer: 'Disable SSID broadcast.',
+                explanation: "Disabling SSID broadcast prevents the access point from announcing the name of the network. Enabling WPA encryption, configuring DMZ settings, and configuring a DNS server will accomplish different tasks, but the name of the network will still be announced."
             },
             {
-                id: 25,
-                type: 'multiple-choice',
-                question: 'If the default gateway is configured incorrectly on the host, what is the impact on communications?',
-                options: [
-                    'There is no impact on communications.',
-                    'The host is unable to communicate on the local network.',
-                    'The host can communicate with other hosts on the local network, but is unable to communicate with hosts on remote networks.',
-                    'The host can communicate with other hosts on remote networks, but is unable to communicate with hosts on the local network.'
-                ],
-                correctAnswer: 'The host can communicate with other hosts on the local network, but is unable to communicate with hosts on remote networks.'
-            },
-            {
-                id: 26,
-                type: 'multiple-choice',
-                question: 'Which command can an administrator execute to determine what interface a router will use to reach remote networks?',
-                options: [
-                    'show ip route',
-                    'show arp',
-                    'show protocols',
-                    'show interfaces'
-                ],
-                correctAnswer: 'show ip route'
-            },
-            {
-                id: 27,
-                type: 'multiple-choice',
-                question: 'At which layer of the OSI model would a logical address be added during encapsulation?',
-                options: [
-                    'network layer',
-                    'physical layer',
-                    'transport layer',
-                    'data link layer'
-                ],
-                correctAnswer: 'network layer'
-            },
-            {
-                id: 28,
+                id: 45,
                 type: 'multiple-choice',
                 question: 'A data center has recently updated a physical server to host multiple operating systems on a single CPU. The data center can now provide each customer with a separate web server without having to allocate an actual discrete server for each customer. What is the networking trend that is being implemented by the data center in this situation?',
                 options: [
@@ -782,30 +1085,232 @@
                     'virtualization',
                     'BYOD'
                 ],
-                correctAnswer: 'virtualization'
+                correctAnswer: 'virtualization',
+                explanation: "Virtualization technology can run several different operating systems in parallel on a single CPU."
             },
             {
-                id: 29,
+                id: 46,
+                type: 'multiple-choice',
+                question: 'A network administrator installs a network device that focuses on interconnecting independent local networks. At which layer of devices does this technology reside?',
+                options: [
+                    'access',
+                    'internet',
+                    'core',
+                    'distribution'
+                ],
+                correctAnswer: 'distribution',
+                explanation: "The distribution layer connects local networks and controls the traffic flowing between them. Networking devices that make up the distribution layer are designed to interconnect networks, not individual hosts."
+            },
+            {
+                id: 47,
+                type: 'multiple-choice',
+                question: 'A computer has to send a packet to a destination host in the same LAN. How will the packet be sent?',
+                options: [
+                    'The packet will be sent to the default gateway first, and then, depending on the response from the gateway, it may be sent to the destination host.',
+                    'The packet will be sent directly to the destination host.',
+                    'The packet will first be sent to the default gateway, and then from the default gateway it will be sent directly to the destination host.',
+                    'The packet will be sent only to the default gateway.'
+                ],
+                correctAnswer: 'The packet will be sent directly to the destination host.',
+                explanation: "If the destination host is in the same LAN as the source host, there is no need for a default gateway. A default gateway is needed if a packet needs to be sent outside the LAN."
+            },
+            {
+                id: 48,
+                type: 'multiple-choice',
+                question: 'If the default gateway is configured incorrectly on the host, what is the impact on communications?',
+                options: [
+                    'There is no impact on communications.',
+                    'The host is unable to communicate on the local network.',
+                    'The host can communicate with other hosts on the local network, but is unable to communicate with hosts on remote networks.',
+                    'The host can communicate with other hosts on remote networks, but is unable to communicate with hosts on the local network.'
+                ],
+                correctAnswer: 'The host can communicate with other hosts on the local network, but is unable to communicate with hosts on remote networks.',
+                explanation: "A default gateway is only required to communicate with devices on another network. The absence of a default gateway does not affect connectivity between devices on the same local network."
+            },
+            {
+                id: 49,
+                type: 'multiple-select',
+                question: 'Which three commands are used to set up secure access to a router through a connection to the console interface? (Choose three.)',
+                options: [
+                    'interface fastethernet 0/0',
+                    'line console 0',
+                    'line vty 0 4',
+                    'password cisco',
+                    'login',
+                    'enable secret cisco'
+                ],
+                correctAnswers: ['line console 0', 'password cisco', 'login'],
+                explanation: "The three commands needed to password protect the console port are as follows: line console 0, password cisco, login. The interface fastethernet 0/0 command is commonly used to access the configuration mode used to apply specific parameters such as the IP address to the Fa0/0 port. The line vty 0 4 command is used to access the configuration mode for Telnet. The 0 and 4 parameters specify ports 0 through 4, or a maximum of five simultaneous Telnet connections. The enable secret command is used to apply a password used on the router to access the privileged mode."
+            },
+            {
+                id: 50,
+                type: 'multiple-choice',
+                question: 'A network administrator establishes a connection to a switch via SSH. What characteristic uniquely describes the SSH connection?',
+                options: [
+                    'direct access to the switch through the use of a terminal emulation program',
+                    'remote access to the switch through the use of a telephone dialup connection',
+                    'on-site access to a switch through the use of a directly connected PC and a console cable',
+                    'remote access to a switch where data is encrypted during the session',
+                    'out-of-band access to a switch through the use of a virtual terminal with password authentication'
+                ],
+                correctAnswer: 'remote access to a switch where data is encrypted during the session',
+                explanation: "SSH provides a secure remote login through a virtual interface. SSH provides a stronger password authentication than Telnet. SSH also encrypts the data during the session."
+            },
+            {
+                id: 51,
+                type: 'multiple-choice',
+                question: 'Which type of access is secured on a Cisco router or switch with the enable secret command?',
+                options: [
+                    'privileged EXEC',
+                    'console line',
+                    'AUX port',
+                    'virtual terminal'
+                ],
+                correctAnswer: 'privileged EXEC',
+                explanation: "The enable secret command secures access to the privileged EXEC mode of a Cisco router or switch."
+            },
+            {
+                id: 52,
+                type: 'multiple-select',
+                question: 'When configuring SSH on a router to implement secure network management, a network engineer has issued the login local and transport input ssh line vty commands. What three additional configuration actions have to be performed to complete the SSH configuration? (Choose three.)',
+                options: [
+                    'Configure role-based CLI access.',
+                    'Create a valid local username and password database.',
+                    'Set the user privilege levels.',
+                    'Configure the correct IP domain name.',
+                    'Generate the asymmetric RSA keys.',
+                    'Manually enable SSH after the RSA keys are generated.'
+                ],
+                correctAnswers: ['Create a valid local username and password database.', 'Configure the correct IP domain name.', 'Generate the asymmetric RSA keys.'],
+                explanation: "SSH is automatically enabled after the RSA keys are generated. Setting user privilege levels and configuring role-based CLI access are good security practices but are not a requirement of implementing SSH."
+            },
+            {
+                id: 53,
                 type: 'matching',
-                question: 'Match each DHCP message type with its description.',
+                question: 'Match the commands to the correct actions.',
                 items: [
-                    { id: 'dhcprequest', text: 'DHCPREQUEST' },
-                    { id: 'dhcpdiscover', text: 'DHCPDISCOVER' },
-                    { id: 'dhcpack', text: 'DHCPACK' },
-                    { id: 'dhcpoffer', text: 'DHCPOFFER' }
+                    { id: 'console_security', text: 'provides security on the console' },
+                    { id: 'display_message', text: 'displays a message when the router is accessed' },
+                    { id: 'configure_name', text: 'configures a name on the router' }
                 ],
                 definitions: [
-                    { id: 'client_message', text: 'a client initiating a message to find a DHCP server' },
-                    { id: 'server_response', text: 'a DHCP server responding to the initial request by a client' },
-                    { id: 'client_accepting', text: 'the client accepting the IP address provided by the DHCP server' },
-                    { id: 'server_confirming', text: 'the DHCP server confirming that the address lease has been accepted' }
+                    { id: 'hostname', text: 'Router(config)# hostname CL1' },
+                    { id: 'password', text: 'Router(config-line)# password class' },
+                    { id: 'banner', text: 'Router(config)# banner motd #' }
                 ],
                 correctAnswers: {
-                    'dhcprequest': 'client_accepting',
-                    'dhcpdiscover': 'client_message',
-                    'dhcpack': 'server_confirming',
-                    'dhcpoffer': 'server_response'
-                }
+                    'console_security': 'password',
+                    'display_message': 'banner',
+                    'configure_name': 'hostname'
+                },
+                explanation: "Router(config)# hostname CL1 configures a name on the router. Router(config-line)# password class provides security on the console. Router(config)# banner motd # displays a message when the router is accessed."
+            },
+            {
+                id: 54,
+                type: 'multiple-choice',
+                question: 'What is the purpose of the subnet mask in conjunction with an IP address?',
+                options: [
+                    'to uniquely identify a host on a network',
+                    'to determine the subnet to which the host belongs',
+                    'to mask the IP address to outsiders',
+                    'to identify whether the address is public or private'
+                ],
+                correctAnswer: 'to determine the subnet to which the host belongs',
+                explanation: "With the IPv4 address, a subnet mask is also necessary. A subnet mask is a special type of IPv4 address that coupled with the IP address determines the subnet of which the device is a member."
+            },
+            {
+                id: 55,
+                type: 'multiple-select',
+                question: 'Which two statements describe characteristics of network addresses? (Choose two.)',
+                options: [
+                    'A valid public IPv4 or IPv6 address is needed in order for devices to communicate over the internet.',
+                    'DHCP is used to dynamically assign both MAC and IP addresses to devices connected to the network.',
+                    'A statically assigned IP address will be valid on any network to which the device connects.',
+                    'The MAC address of a device will change when that device moves from one Ethernet network to another.',
+                    'A MAC address is also referred to as a physical address because it is permanently embedded on the NIC.'
+                ],
+                correctAnswers: ['A valid public IPv4 or IPv6 address is needed in order for devices to communicate over the internet.', 'A MAC address is also referred to as a physical address because it is permanently embedded on the NIC.'],
+                explanation: "Knowing how network addressing works can speed configuration and troubleshooting tasks. MAC addresses are assigned by the NIC manufacturer and remain the same as long as the NIC is not replaced. MAC addresses are used to communicate between devices connected to the same local Ethernet network. Valid IPv4 and IPv6 addresses are necessary for communications to be routed over the internet. All IP addresses are valid only on a network that has the same network prefix bits and the same subnet mask."
+            },
+            {
+                id: 56,
+                type: 'multiple-select',
+                question: 'What are three characteristics of multicast transmission? (Choose three.)',
+                options: [
+                    'Computers use multicast transmission to request IPv4 addresses.',
+                    'The source address of a multicast transmission is in the range of 224.0.0.0 to 224.0.0.255.',
+                    'The range of 224.0.0.0 to 224.0.0.255 is reserved to reach multicast groups on a local network.',
+                    'A single packet can be sent to a group of hosts.',
+                    'Multicast transmission can be used by routers to exchange routing information.',
+                    'Multicast messages map lower layer addresses to upper layer addresses.'
+                ],
+                correctAnswers: ['The range of 224.0.0.0 to 224.0.0.255 is reserved to reach multicast groups on a local network.', 'A single packet can be sent to a group of hosts.', 'Multicast transmission can be used by routers to exchange routing information.'],
+                explanation: "Broadcast messages consist of single packets that are sent to all hosts on a network segment. These types of messages are used to request IPv4 addresses, and map upper layer addresses to lower layer addresses. A multicast transmission is a single packet sent to a group of hosts and is used by routing protocols, such as OSPF and RIPv2, to exchange routes. The address range 224.0.0.0 to 224.0.0.255 is reserved for link-local addresses to reach multicast groups on a local network."
+            },
+            {
+                id: 57,
+                type: 'matching',
+                question: 'Match the router prompt to the configuration task.',
+                items: [
+                    { id: 'routera', text: 'RouterA#' },
+                    { id: 'routera_config', text: 'RouterA(config)#' },
+                    { id: 'routera_config_if', text: 'RouterA(config-if)#' },
+                    { id: 'routera_config_line', text: 'RouterA(config-line)#' }
+                ],
+                definitions: [
+                    { id: 'vty_lines', text: 'configure vty lines' },
+                    { id: 'wan_interface', text: 'configure a WAN interface' },
+                    { id: 'config_mode', text: 'enter configuration mode' },
+                    { id: 'password', text: 'add a password required to access the privileged EXEC mode' }
+                ],
+                correctAnswers: {
+                    'routera': 'config_mode',
+                    'routera_config': 'password',
+                    'routera_config_if': 'wan_interface',
+                    'routera_config_line': 'vty_lines'
+                },
+                explanation: "RouterA# is used to enter configuration mode. RouterA(config)# is used to add a password required to access the privileged EXEC mode. RouterA(config-if)# is used to configure a WAN interface. RouterA(config-line)# is used to configure vty lines."
+            },
+            {
+                id: 58,
+                type: 'multiple-choice',
+                question: 'A network administrator issues the Switch(config)# Interface FastEthernet 0/1 command on a Cisco switch. Which term is used to describe the "0/1" part in the command?',
+                options: [
+                    'argument',
+                    'keyword',
+                    'hot key',
+                    'command'
+                ],
+                correctAnswer: 'argument',
+                explanation: "In this command structure, the Interface part is the command, the FastEthernet part is a keyword, and the 0/1 part is an argument."
+            },
+            {
+                id: 59,
+                type: 'multiple-select',
+                question: 'What three facts can be determined from the viewable output of the show ip interface brief command? (Choose three.)',
+                options: [
+                    'Passwords have been configured on the switch.',
+                    'One device is attached to a physical interface.',
+                    'The switch can be remotely managed.',
+                    'Two physical interfaces have been configured.',
+                    'The default SVI has been configured.',
+                    'Two devices are attached to the switch.'
+                ],
+                correctAnswers: ['One device is attached to a physical interface.', 'The switch can be remotely managed.', 'The default SVI has been configured.'],
+                explanation: "Vlan1 is the default SVI. Because an SVI has been configured, the switch can be configured and managed remotely. FastEthernet0/0 is showing up and up, so a device is connected."
+            },
+            {
+                id: 60,
+                type: 'multiple-choice',
+                question: 'Which command can an administrator execute to determine what interface a router will use to reach remote networks?',
+                options: [
+                    'show ip route',
+                    'show arp',
+                    'show protocols',
+                    'show interfaces'
+                ],
+                correctAnswer: 'show ip route',
+                explanation: "The show ip route command is used to display the IP routing table of the router. The IP routing table will show a list of known local and remote networks and the interfaces that the router will use to reach those networks."
             }
         ];
 
@@ -823,8 +1328,8 @@
             // Deep clone the questions array to avoid modifying the original
             const shuffledQuestions = JSON.parse(JSON.stringify(questions));
             
-            // Shuffle the questions array
-            shuffleArray(shuffledQuestions);
+            // Shuffle the questions array (optional, can be commented out if you want to keep the original order)
+            // shuffleArray(shuffledQuestions);
             
             // For each question, shuffle its options/items if applicable
             shuffledQuestions.forEach(question => {
@@ -864,6 +1369,20 @@
             // Initialize shuffled questions
             shuffledQuestions = prepareShuffledQuestions();
             
+            // Populate jump to question dropdown
+            const jumpSelect = document.getElementById('jump-select');
+            shuffledQuestions.forEach((question, index) => {
+                const option = document.createElement('option');
+                option.value = index;
+                option.textContent = `Question ${index + 1}`;
+                jumpSelect.appendChild(option);
+            });
+            
+            jumpSelect.addEventListener('change', function() {
+                currentQuestion = parseInt(this.value);
+                renderQuestion();
+            });
+            
             // Add event listeners
             document.getElementById('next-button').addEventListener('click', goToNextQuestion);
             document.getElementById('prev-button').addEventListener('click', goToPrevQuestion);
@@ -882,58 +1401,58 @@
         function handleAnswerSelect(questionId, answer, isMultipleSelect = false) {
             const question = shuffledQuestions.find(q => q.id === questionId);
             
-            // If answer already exists for this question, don't allow changes
-            if (userAnswers[questionId] && !isMultipleSelect) {
-                return;
-            }
-            if (isMultipleSelect && userAnswers[questionId] && userAnswers[questionId].length >= question.correctAnswers.length) {
-                return;
-            }
-            
             if (isMultipleSelect) {
                 const currentAnswers = userAnswers[questionId] || [];
-                // Don't allow deselecting once selected
-                if (!currentAnswers.includes(answer)) {
-                    const updatedAnswers = [...currentAnswers, answer];
-                    userAnswers[questionId] = updatedAnswers;
-                    
-                    // Show feedback for multiple select
-                    const options = document.querySelectorAll('.option');
-                    options.forEach(option => {
-                        const optionText = option.querySelector('.option-text').textContent;
-                        const isSelected = updatedAnswers.includes(optionText);
-                        const isCorrect = question.correctAnswers.includes(optionText);
-                        
-                        if (isSelected) {
-                            option.classList.add('selected');
-                            option.classList.add(isCorrect ? 'correct' : 'incorrect');
-                        }
-                    });
+                
+                // Toggle the answer (add if not present, remove if present)
+                if (currentAnswers.includes(answer)) {
+                    userAnswers[questionId] = currentAnswers.filter(a => a !== answer);
+                } else {
+                    userAnswers[questionId] = [...currentAnswers, answer];
                 }
+                
+                // Re-render to update the visual state
+                renderQuestion();
             } else {
+                // For single-choice questions, just set the answer directly
                 userAnswers[questionId] = answer;
                 
-                // Show feedback for multiple choice
+                // Show feedback immediately for multiple-choice
                 const options = document.querySelectorAll('.option');
                 options.forEach(option => {
                     const optionText = option.querySelector('.option-text').textContent;
-                    const isCorrect = optionText === question.correctAnswer;
                     const isSelected = optionText === answer;
+                    const isCorrect = optionText === question.correctAnswer;
                     
                     if (isSelected) {
                         option.classList.add('selected');
                         option.classList.add(isCorrect ? 'correct' : 'incorrect');
                         
-                        // Update checkmark/x-mark
+                        // Add feedback icon
+                        const feedbackIcon = document.createElement('span');
+                        feedbackIcon.className = 'feedback-icon';
+                        feedbackIcon.textContent = isCorrect ? '✓' : '✗';
+                        
                         const content = option.querySelector('.option-content');
-                        const mark = document.createElement('span');
-                        mark.className = isCorrect ? 'checkmark' : 'x-mark';
-                        mark.textContent = isCorrect ? '✓' : '✗';
-                        content.appendChild(mark);
+                        if (!content.querySelector('.feedback-icon')) {
+                            content.appendChild(feedbackIcon);
+                        }
                     }
                 });
+                
+                // Show explanation
+                const questionContainer = document.querySelector('.question-container');
+                let feedback = questionContainer.querySelector('.feedback-message');
+                if (!feedback) {
+                    feedback = document.createElement('div');
+                    feedback.className = 'feedback-message';
+                    questionContainer.appendChild(feedback);
+                }
+                
+                const isCorrect = answer === question.correctAnswer;
+                feedback.textContent = isCorrect ? '✓ Correct! ' + question.explanation : '✗ Incorrect. ' + question.explanation;
+                feedback.className = 'feedback-message ' + (isCorrect ? 'correct' : 'incorrect');
             }
-            renderQuestion();
         }
 
         function handleItemSelect(itemId, questionId) {
@@ -946,39 +1465,33 @@
         function handleDefinitionSelect(definitionId, questionId) {
             if (!selectedItem) return;
             
-            const question = shuffledQuestions.find(q => q.id === parseInt(questionId.replace('q', '')));
+            const question = shuffledQuestions.find(q => q.id === parseInt(questionId));
             const definition = question.definitions.find(d => d.id === definitionId);
             if (!definition) return;
             
-            const currentMatches = { ...(matchingAnswers[questionId] || {}) };
-            currentMatches[selectedItem.id] = definition.id;
-            matchingAnswers[questionId] = currentMatches;
+            // Update matching answers
+            if (!matchingAnswers[questionId]) {
+                matchingAnswers[questionId] = {};
+            }
+            matchingAnswers[questionId][selectedItem.id] = definitionId;
             
-            // Show feedback for matching
-            const isCorrect = question.correctAnswers[selectedItem.id] === definition.id;
-            const matchingItems = document.querySelectorAll('.matching-item');
-            matchingItems.forEach(item => {
-                if (item.textContent.includes(selectedItem.text) || 
-                    item.textContent.includes(definition.text)) {
-                    item.classList.add('matched');
-                    if (!isCorrect) {
-                        item.classList.add('incorrect');
-                    }
-                }
-            });
-            
+            // Reset selected item
             selectedItem = null;
+            
+            // Re-render the question
             renderQuestion();
         }
 
+        function getMatchedDefinitionForItem(itemId, questionId) {
+            if (!matchingAnswers[questionId]) return null;
+            return matchingAnswers[questionId][itemId];
+        }
+
         function getMatchedItemForDefinition(definitionId, questionId) {
-            const matches = matchingAnswers[questionId] || {};
-            for (const [itemId, matchedDefId] of Object.entries(matches)) {
+            if (!matchingAnswers[questionId]) return null;
+            for (const [itemId, matchedDefId] of Object.entries(matchingAnswers[questionId])) {
                 if (matchedDefId === definitionId) {
-                    const question = shuffledQuestions.find(q => q.id === parseInt(questionId.replace('q', '')));
-                    if (question) {
-                        return question.items.find(item => item.id === itemId);
-                    }
+                    return shuffledQuestions.find(q => q.id === parseInt(questionId)).items.find(item => item.id === itemId);
                 }
             }
             return null;
@@ -987,125 +1500,144 @@
         function calculateScore() {
             let score = 0;
             let totalQuestions = shuffledQuestions.length;
+            let answered = 0;
             
             shuffledQuestions.forEach(question => {
                 if (question.type === 'matching') {
-                    const userMatches = matchingAnswers[`q${question.id}`] || {};
+                    const userMatches = matchingAnswers[question.id] || {};
                     const correctMatches = question.correctAnswers;
                     let allCorrect = true;
+                    let hasAnswer = false;
                     
-                    Object.keys(correctMatches).forEach(key => {
+                    // Check if user provided any matches for this question
+                    if (Object.keys(userMatches).length > 0) {
+                        hasAnswer = true;
+                        answered++;
+                    }
+                    
+                    // Check if all matches are correct
+                    for (const key of Object.keys(correctMatches)) {
                         if (userMatches[key] !== correctMatches[key]) {
                             allCorrect = false;
+                            break;
                         }
-                    });
+                    }
                     
-                    if (allCorrect && Object.keys(userMatches).length === Object.keys(correctMatches).length) {
-                        score += 1;
+                    // Check if all items are matched
+                    if (Object.keys(userMatches).length !== Object.keys(correctMatches).length) {
+                        allCorrect = false;
+                    }
+                    
+                    if (hasAnswer && allCorrect) {
+                        score++;
                     }
                 } else if (question.type === 'multiple-select') {
                     const userSelected = userAnswers[question.id] || [];
                     const correctAnswers = question.correctAnswers;
                     
-                    if (userSelected.length === correctAnswers.length && 
-                        userSelected.every(item => correctAnswers.includes(item))) {
-                        score += 1;
+                    // Check if user provided an answer
+                    if (userSelected.length > 0) {
+                        answered++;
+                        
+                        // Check if all selections match the correct answers
+                        if (userSelected.length === correctAnswers.length &&
+                            userSelected.every(item => correctAnswers.includes(item))) {
+                            score++;
+                        }
                     }
-                } else { // multiple-choice
-                    if (userAnswers[question.id] === question.correctAnswer) {
-                        score += 1;
+                } else if (question.type === 'multiple-choice') {
+                    // Check if user provided an answer
+                    if (userAnswers[question.id] !== undefined) {
+                        answered++;
+                        
+                        // Check if the answer is correct
+                        if (userAnswers[question.id] === question.correctAnswer) {
+                            score++;
+                        }
                     }
                 }
             });
             
-            return { score, total: totalQuestions };
+            return { score, total: totalQuestions, answered };
         }
 
         function renderMultipleChoice(question) {
+            const isAnswered = userAnswers[question.id] !== undefined;
+            const userAnswer = userAnswers[question.id];
+            
             return `
                 <div class="question-container">
                     <h2 class="question-title">Question ${currentQuestion + 1}</h2>
-                    <p class="question-text">${question.question}</p>
+                    <div class="question-text">${question.question}</div>
                     <div class="options-container">
                         ${question.options.map((option, index) => {
-                            const isSelected = userAnswers[question.id] === option;
+                            const isSelected = userAnswer === option;
                             const isCorrect = option === question.correctAnswer;
-                            let classes = [];
-                            const isAnswered = userAnswers[question.id] !== undefined;
-                            
-                            if (isSelected) {
-                                classes.push('selected');
-                                classes.push(isCorrect ? 'correct' : 'incorrect');
-                            }
+                            const classes = isSelected ? `option selected ${isCorrect ? 'correct' : 'incorrect'}` : 'option';
                             
                             return `
-                                <div class="option ${classes.join(' ')}"
-                                     onclick="handleAnswerSelect(${question.id}, '${option}')"
-                                     style="${isAnswered && !isSelected ? 'pointer-events: none; opacity: 0.7;' : ''}">
+                                <div class="${classes}" onclick="handleAnswerSelect(${question.id}, '${option.replace(/'/g, "\\'")}')">
                                     <div class="option-content">
-                                        <span class="option-letter">${String.fromCharCode(65 + index)}</span>
+                                        <span class="option-letter">${String.fromCharCode(65 + index)}.</span>
                                         <span class="option-text">${option}</span>
-                                        ${isSelected ? `
-                                            <span class="${isCorrect ? 'checkmark' : 'x-mark'}">
-                                                ${isCorrect ? '✓' : '✗'}
-                                            </span>
-                                        ` : ''}
+                                        ${isSelected ? `<span class="feedback-icon">${isCorrect ? '✓' : '✗'}</span>` : ''}
                                     </div>
                                 </div>
                             `;
                         }).join('')}
                     </div>
+                    ${isAnswered ? `
+                        <div class="feedback-message ${userAnswer === question.correctAnswer ? 'correct' : 'incorrect'}">
+                            ${userAnswer === question.correctAnswer ? '✓ Correct! ' : '✗ Incorrect. '}
+                            ${question.explanation}
+                        </div>
+                    ` : ''}
                 </div>
             `;
         }
 
         function renderMultipleSelect(question) {
             const userSelected = userAnswers[question.id] || [];
-            const hasAnswered = userSelected.length >= question.correctAnswers.length;
+            const isComplete = userSelected.length >= question.correctAnswers.length;
+            const isCorrect = isComplete && userSelected.length === question.correctAnswers.length && 
+                              userSelected.every(ans => question.correctAnswers.includes(ans));
             
             return `
                 <div class="question-container">
                     <h2 class="question-title">Question ${currentQuestion + 1}</h2>
-                    <p class="question-text">${question.question}</p>
+                    <div class="question-text">${question.question}</div>
                     <div class="options-container">
                         ${question.options.map((option, index) => {
                             const isSelected = userSelected.includes(option);
-                            const isCorrect = question.correctAnswers.includes(option);
-                            let classes = [];
+                            const isCorrectOption = question.correctAnswers.includes(option);
+                            let classes = 'option';
                             
                             if (isSelected) {
-                                classes.push('selected');
-                                classes.push(isCorrect ? 'correct' : 'incorrect');
+                                classes += ' selected';
+                                if (isComplete) {
+                                    classes += isCorrectOption ? ' correct' : ' incorrect';
+                                }
                             }
                             
                             return `
-                                <div class="option ${classes.join(' ')}"
-                                     onclick="handleAnswerSelect(${question.id}, '${option}', true)"
-                                     style="${(hasAnswered || isSelected) ? 'pointer-events: none; opacity: 0.7;' : ''}">
+                                <div class="${classes}" onclick="handleAnswerSelect(${question.id}, '${option.replace(/'/g, "\\'")}', true)">
                                     <div class="option-content">
-                                        <div class="checkbox ${isSelected ? 'checked' : ''}">
-                                            ${isSelected ? '✓' : ''}
-                                        </div>
+                                        <div class="checkbox">${isSelected ? '✓' : ''}</div>
                                         <span class="option-text">${option}</span>
-                                        ${isSelected ? `
-                                            <span class="feedback-icon">
-                                                ${isCorrect ? '✓' : '✗'}
-                                            </span>
-                                        ` : ''}
+                                        ${isSelected && isComplete ? 
+                                            `<span class="feedback-icon">${isCorrectOption ? '✓' : '✗'}</span>` : 
+                                            ''}
                                     </div>
                                 </div>
                             `;
                         }).join('')}
                     </div>
                     <div class="selection-hint">
-                        Select all that apply (${question.correctAnswers.length} correct answers)
-                        ${hasAnswered ? `
-                            <div class="feedback-message ${userSelected.every(ans => question.correctAnswers.includes(ans)) && 
-                                userSelected.length === question.correctAnswers.length ? 'correct' : 'incorrect'}">
-                                ${userSelected.every(ans => question.correctAnswers.includes(ans)) && 
-                                userSelected.length === question.correctAnswers.length
-                                    ? '✓ Correct!' 
-                                    : '✗ Incorrect'}
+                        Select ${question.correctAnswers.length} correct answers
+                        ${isComplete ? `
+                            <div class="feedback-message ${isCorrect ? 'correct' : 'incorrect'}">
+                                ${isCorrect ? '✓ Correct! ' : '✗ Incorrect. '}
+                                ${question.explanation}
                             </div>
                         ` : ''}
                     </div>
@@ -1114,50 +1646,89 @@
         }
 
         function renderMatching(question) {
-            const qKey = `q${question.id}`;
-            const matches = matchingAnswers[qKey] || {};
+            const userMatches = matchingAnswers[question.id] || {};
+            
+            // Check if all items are matched
+            const allMatched = question.items.every(item => 
+                userMatches[item.id] !== undefined);
+            
+            // Check if all matches are correct
+            const isCorrect = allMatched && 
+                Object.entries(userMatches).every(([itemId, defId]) => 
+                    question.correctAnswers[itemId] === defId);
             
             return `
                 <div class="question-container">
                     <h2 class="question-title">Question ${currentQuestion + 1}</h2>
-                    <p class="question-text">${question.question}</p>
+                    <div class="question-text">${question.question}</div>
                     <div class="matching-container">
                         <div class="matching-section">
-                            <h3>Terms</h3>
+                            <h3>Items</h3>
                             ${question.items.map(item => {
-                                const isMatched = Object.keys(matches).includes(item.id);
+                                const isMatched = userMatches[item.id] !== undefined;
+                                const matchedDefId = userMatches[item.id];
+                                const isCorrectMatch = isMatched && matchedDefId === question.correctAnswers[item.id];
                                 const isSelected = selectedItem && selectedItem.id === item.id;
-                                const isCorrectMatch = isMatched && matches[item.id] === question.correctAnswers[item.id];
+                                
+                                let classes = 'matching-item';
+                                if (isMatched) classes += ' matched';
+                                if (isSelected) classes += ' selected';
+                                if (isMatched && !isCorrectMatch && allMatched) classes += ' incorrect';
+                                
+                                // Find the matched definition text
+                                let matchedDefText = '';
+                                if (isMatched) {
+                                    const matchedDef = question.definitions.find(def => def.id === matchedDefId);
+                                    if (matchedDef) matchedDefText = matchedDef.text;
+                                }
+                                
                                 return `
-                                    <div class="matching-item ${isMatched ? 'matched' : ''} ${isSelected ? 'selected' : ''} ${isMatched && !isCorrectMatch ? 'incorrect' : ''}"
-                                         onclick="${!isMatched ? `handleItemSelect('${item.id}', ${question.id})` : ''}"
-                                    >
+                                    <div class="${classes}" onclick="${isMatched ? '' : `handleItemSelect('${item.id}', ${question.id})`}">
                                         ${item.text}
-                                        ${isMatched ? '<span class="checkmark">✓</span>' : ''}
-                                    </div>
-                                `;
-                            }).join('')}
-                        </div>
-                        <div class="matching-section">
-                            <h3>Definitions</h3>
-                            ${question.definitions.map(definition => {
-                                const matchedItem = getMatchedItemForDefinition(definition.id, qKey);
-                                const isCorrectMatch = matchedItem && question.correctAnswers[matchedItem.id] === definition.id;
-                                return `
-                                    <div class="matching-item ${matchedItem ? 'matched' : ''} ${matchedItem && !isCorrectMatch ? 'incorrect' : ''}"
-                                         onclick="handleDefinitionSelect('${definition.id}', '${qKey}')"
-                                    >
-                                        ${definition.text}
-                                        ${matchedItem ? `
+                                        ${isMatched ? `
                                             <div class="matched-term">
-                                                Matched with: ${matchedItem.text}
-                                                <span class="checkmark">✓</span>
+                                                Matched with: ${matchedDefText}
+                                                ${allMatched ? `<span class="checkmark">${isCorrectMatch ? '✓' : '✗'}</span>` : ''}
                                             </div>
                                         ` : ''}
                                     </div>
                                 `;
                             }).join('')}
                         </div>
+                        <div class="matching-section">
+                            <h3>Definitions</h3>
+                            ${question.definitions.map(def => {
+                                const matchedItem = getMatchedItemForDefinition(def.id, question.id);
+                                const isMatched = matchedItem !== null;
+                                const isCorrectMatch = isMatched && 
+                                    question.correctAnswers[matchedItem.id] === def.id;
+                                
+                                let classes = 'matching-item';
+                                if (isMatched) classes += ' matched';
+                                if (isMatched && !isCorrectMatch && allMatched) classes += ' incorrect';
+                                
+                                return `
+                                    <div class="${classes}" onclick="${isMatched || !selectedItem ? '' : `handleDefinitionSelect('${def.id}', ${question.id})`}">
+                                        ${def.text}
+                                        ${isMatched ? `
+                                            <div class="matched-term">
+                                                Matched with: ${matchedItem.text}
+                                                ${allMatched ? `<span class="checkmark">${isCorrectMatch ? '✓' : '✗'}</span>` : ''}
+                                            </div>
+                                        ` : ''}
+                                    </div>
+                                `;
+                            }).join('')}
+                        </div>
+                    </div>
+                    <div class="selection-hint">
+                        ${selectedItem ? `Select a definition to match with "${selectedItem.text}"` : 'Select an item to begin matching'}
+                        ${allMatched ? `
+                            <div class="feedback-message ${isCorrect ? 'correct' : 'incorrect'}">
+                                ${isCorrect ? '✓ Correct! ' : '✗ Incorrect. '}
+                                ${question.explanation}
+                            </div>
+                        ` : ''}
                     </div>
                 </div>
             `;
@@ -1186,14 +1757,14 @@
             matchingAnswers = {};
             selectedItem = null;
             showResults = false;
-            // Reshuffle questions on restart
+            // Re-shuffle questions if desired
             shuffledQuestions = prepareShuffledQuestions();
             document.querySelector('.nav-container').style.display = 'flex';
             renderQuestion();
         }
 
         function renderResults() {
-            const { score, total } = calculateScore();
+            const { score, total, answered } = calculateScore();
             const percentage = Math.round((score / total) * 100);
             
             let grade = 'F';
@@ -1205,9 +1776,10 @@
             const content = `
                 <div class="results-container">
                     <h2>Quiz Results</h2>
-                    <div class="grade">${grade}</div>
+                    <div class="grade ${grade}">${grade}</div>
                     <div class="score">${percentage}%</div>
-                    <p>You answered ${score} out of ${total} questions correctly.</p>
+                    <p>You answered ${score} out of ${answered} questions correctly.</p>
+                    <p>${total - answered} questions were left unanswered.</p>
                     <button class="restart-button" onclick="restartQuiz()">
                         Restart Quiz
                     </button>
@@ -1241,6 +1813,9 @@
 
             document.getElementById('question-content').innerHTML = content;
             
+            // Update jump menu
+            document.getElementById('jump-select').value = currentQuestion;
+            
             // Update navigation buttons
             document.getElementById('prev-button').disabled = currentQuestion === 0;
             document.getElementById('next-button').textContent = 
@@ -1252,12 +1827,8 @@
         }
 
         function updateQuestionCounter() {
-            const currentQuestionSpan = document.getElementById('current-question');
-            const totalQuestionsSpan = document.getElementById('total-questions');
-            if (currentQuestionSpan && totalQuestionsSpan) {
-                currentQuestionSpan.textContent = (currentQuestion + 1).toString();
-                totalQuestionsSpan.textContent = shuffledQuestions.length.toString();
-            }
+            document.getElementById('current-question').textContent = (currentQuestion + 1).toString();
+            document.getElementById('total-questions').textContent = shuffledQuestions.length.toString();
         }
     </script>
 </body>
